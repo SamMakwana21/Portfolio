@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sahil Makwana Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+  /* Reset & base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #121928; /* Sem background dark blue-black */
+    color: #cfd6e3;
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll caused by animations */
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  ul {
+    padding-left: 0;
+    list-style-type: none;
+  }
+  h1, h2, h3 {
+    margin-top: 0;
+    font-weight: 700;
+  }
+  h1 {
+    font-size: 2.8rem;
+  }
+  h2 {
+    font-size: 2.2rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  p {
+    margin: 0.6em 0;
+  }
+
+  /* Container */
+  .container {
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+  }
+
+  /* Navbar */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #161d2e;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Added shadow for sticky nav */
+  }
+  nav .logo {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #5CB3AF;
+  }
+  nav ul {
+    display: flex;
+    gap: 1.5rem;
+  }
+  nav li {
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    transition: color 0.3s ease, transform 0.3s ease; /* Added transform for animation */
+  }
+  nav li:hover {
+    color: #004F61;
+    transform: translateY(-3px); /* Added animation */
+  }
+
+  /* Underline decoration for section titles */
+  .section-title {
+    text-align: center;
+    color: white;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .section-subtitle {
+    text-align: center;
+    color: #5CB3AF;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+  }
+  .section-divider {
+    width: 60px;
+    height: 4px;
+    margin: 0 auto 3rem;
+    border-radius: 3px;
+    background: linear-gradient(90deg,#004F61,#5CB3AF);
+  }
+
+  /* Hero Section */
+  .hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 3rem;
+    padding: 6rem 1rem 3rem;
+  }
+  .hero-text {
+    flex: 1 1 460px;
+    color: #cfd6e3;
+    /* Initial state for animation */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInSlideUp 1s ease-out forwards;
+    animation-delay: 0.2s;
+  }
+  .hero-intro {
+    color: #5CB3AF;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  .hero-name {
+    font-weight: 900;
+    font-size: 3.4rem;
+    background: linear-gradient(90deg,#004F61,#5CB3AF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-subtitle {
+    font-size: 1.3rem;
+    margin: 0.3em 0 1em;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1em;
+  }
+  .hero-tags span {
+    background-color: #1c2436;
+    padding: 0.3rem 0.9rem;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #5CB3AF;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: transform 0.3s ease; /* Added for hover effect */
+  }
+  .hero-tags span:hover {
+    transform: translateY(-3px); /* Added animation */
+  }
+  .hero-tags span svg {
+    fill: #5CB3AF;
+    width: 16px;
+    height: 16px;
+  }
+  .hero-desc {
+    max-width: 460px;
+    font-weight: 400;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  .btn-primary, .btn-secondary {
+    padding: 0.8rem 2rem;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease, filter 0.3s ease; /* Added transform */
+  }
+  .btn-primary {
+    background: linear-gradient(90deg,#004F61,#5CB3AF);
+    color: white;
+  }
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-3px); /* Added animation */
+  }
+  .btn-secondary {
+    background: transparent;
+    border: 2px solid #5CB3AF;
+    color: #5CB3AF;
+  }
+  .btn-secondary:hover {
+    background: #5CB3AF;
+    color: white;
+    transform: translateY(-3px); /* Added animation */
+  }
+  .hero-image {
+    flex: 1 1 320px;
+    position: relative;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #5CB3AFAA;
+    border: 2px solid #004F61;
+    margin-left: auto;
+    /* Initial state for animation */
+    opacity: 0;
+    transform: scale(0.8);
+    animation: fadeInScale 1s ease-out forwards;
+    animation-delay: 0.5s;
+  }
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%; /* Ensure image itself is circular */
+    position: relative; /* To ensure it respects z-index if needed */
+    z-index: 1; /* Lower z-index than icons */
+  }
+  /* Floating icon circles on hero image */
+  .floating-icons {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 2; /* Higher z-index than image */
+  }
+  .floating-icon {
+    position: absolute;
+    background: #173030cc;
+    border: 1.5px solid #5CB3AF;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5CB3AF;
+    font-size: 18px;
+    user-select: none;
+    animation: float 3s ease-in-out infinite; /* Added floating animation */
+  }
+  .icon-unity { top: 15%; left: 6%; animation-delay: 0s; }
+  .icon-code { bottom: 18%; left: 4%; animation-delay: 0.5s; }
+  .icon-mobile { top: 22%; right: 10%; animation-delay: 1s; }
+  .icon-game { bottom: 10%; right: 18%; animation-delay: 1.5s; }
+
+  /* Keyframe Animations */
+  @keyframes fadeInSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+  }
+
+  /* Skills Section */
+  .section-skills {
+    padding: 5rem 1rem 3rem;
+  }
+  .skills-group {
+    background: #181f34;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.7rem;
+  }
+  .skills-group h3 {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 1.6rem;
+    position: relative;
+    padding-left: 8px;
+  }
+  .skills-group h3::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 4px;
+    width: 4px; height: 28px;
+    border-radius: 2px;
+    background: linear-gradient(180deg,#004F61,#5CB3AF);
+  }
+  .skill-icons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #5CB3AF transparent;
+  }
+  .skill-icons::-webkit-scrollbar {
+    height: 6px;
+  }
+  .skill-icons::-webkit-scrollbar-thumb {
+    background-color: #5CB3AF;
+    border-radius: 3px;
+  }
+  .skill-card {
+    background: #121928;
+    flex: 0 0 110px;
+    border-radius: 12px;
+    padding: 1.2rem 0.5rem;
+    box-shadow: inset 0 0 10px #5CB3AF30;
+    text-align: center;
+    cursor: default;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
+    user-select: none;
+  }
+  .skill-card:hover {
+    transform: translateY(-6px) scale(1.05); /* Added scale animation */
+    box-shadow: 0 6px 15px #5CB3AF77;
+  }
+  .skill-icon {
+    font-size: 2.2rem;
+    color: #615fc7;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 3px #5CB3AF80);
+    user-select: none;
+  }
+  .skill-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #a6b1e1;
+  }
+
+  /* Projects Section */
+  .section-projects {
+    padding: 5rem 1rem;
+  }
+  .projects-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2rem;
+  }
+  .project-card {
+    background: #181f34;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 14px #5CB3AF20;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transitions */
+  }
+  .project-card:hover {
+    transform: translateY(-8px) scale(1.02); /* Added animation */
+    box-shadow: 0 8px 20px #5CB3AF50; /* Enhanced shadow on hover */
+  }
+  .project-image {
+    width: 100%;
+    height: 185px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  .project-content {
+    padding: 1.4rem 1.4rem 2rem;
+    color: #d0d5f9;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .project-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+    color: white;
+  }
+  .project-desc {
+    flex-grow: 1;
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: #a2a7b4;
+    margin-bottom: 1rem;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.6rem;
+  }
+  .project-tag {
+    background: #5CB3AF20;
+    color: #5CB3AF;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    user-select: none;
+  }
+  .projects-cta {
+    margin-top: 3rem;
+    text-align: center;
+  }
+  .btn-discuss {
+    background: linear-gradient(90deg,#004F61,#5CB3AF);
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: filter 0.3s ease, transform 0.3s ease; /* Added transform */
+  }
+  .btn-discuss:hover {
+    filter: brightness(1.15);
+    transform: translateY(-3px); /* Added animation */
+  }
+
+  /* Services Section */
+  .section-services {
+    background: #121928;
+    padding: 5rem 1rem 7rem;
+  }
+  .services-list {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  }
+  .service-card {
+    background: #181f34;
+    border-radius: 12px;
+    padding: 2rem 1.7rem 2.5rem;
+    box-shadow: 0 0 14px #5CB3AF20;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transitions */
+  }
+  .service-card:hover {
+    transform: translateY(-8px) scale(1.02); /* Added animation */
+    box-shadow: 0 8px 20px #5CB3AF50; /* Enhanced shadow on hover */
+  }
+  .service-icon {
+    font-size: 2.8rem;
+    color: #5CB3AF;
+    margin-bottom: 1rem;
+  }
+  .service-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 0.8rem;
+  }
+  .service-desc {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #a7adcc;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+  }
+  .service-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  .service-list li {
+    color: #5CB3AF;
+    font-weight: 500;
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 0.6rem;
+  }
+  .service-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #5CB3AF;
+    font-weight: 900;
+  }
+  .services-cta {
+    margin-top: 3rem;
+    text-align: center;
+  }
+  .btn-request {
+    background: linear-gradient(90deg,#004F61,#5CB3AF);
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: filter 0.3s ease, transform 0.3s ease; /* Added transform */
+  }
+  .btn-request:hover {
+    filter: brightness(1.15);
+    transform: translateY(-3px); /* Added animation */
+  }
+
+  /* Contact Section */
+  .section-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    padding: 6rem 1rem 6rem;
+    color: #cfd6e3;
+  }
+  .contact-left, .contact-right {
+    flex: 1 1 400px;
+    border-radius: 12px;
+    background: #181f34;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 0 10px #5CB3AF40;
+  }
+  .contact-left h2 {
+    color: #5CB3AF;
+    margin-bottom: 0.8rem;
+  }
+  .contact-left p {
+    color: #b1b8c9;
+    margin-bottom: 2rem;
+  }
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+  .contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .contact-icon {
+    background: #173030cc;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #5CB3AF;
+    font-size: 18px;
+  }
+  .contact-info-text {
+    font-size: 1rem;
+    color: #d0d5f9;
+  }
+  .contact-right form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+  input, textarea {
+    background: #121928;
+    border: 1px solid #5CB3AF88;
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    color: #cfd6e3;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    resize: vertical;
+    min-height: 40px;
+    transition: border-color 0.3s ease;
+  }
+  input::placeholder, textarea::placeholder {
+    color: #54627a;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: #004F61;
+  }
+  textarea {
+    min-height: 90px;
+  }
+  .btn-collab {
+    align-self: flex-start;
+    background: linear-gradient(90deg,#004F61,#5CB3AF);
+    border: none;
+    padding: 0.9rem 2.4rem;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: filter 0.3s ease, transform 0.3s ease; /* Added transform */
+  }
+  .btn-collab:hover {
+    filter: brightness(1.15);
+    transform: translateY(-3px); /* Added animation */
+  }
+
+  /* Scroll-to-top button */
+  .scroll-top-btn {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    background: linear-gradient(90deg,#004F61,#5CB3AF);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 15px #5CB3AFBB;
+    transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; /* Added transitions */
+    z-index: 50;
+    opacity: 0; /* Hidden by default */
+  }
+  .scroll-top-btn:hover {
+    filter: brightness(1.2);
+    transform: translateY(-3px); /* Added animation */
+  }
+  .scroll-top-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    nav ul {
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+    .hero {
+      flex-direction: column;
+      gap: 2rem;
+      padding-top: 3rem;
+    }
+    .hero-name {
+      font-size: 2.4rem;
+    }
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+    .hero-tags span {
+      font-size: 0.85rem;
+      padding: 0.2rem 0.6rem;
+    }
+    .hero-image {
+      width: 260px;
+      height: 260px;
+      margin-left: 0;
+    }
+    .section-skills .skill-card {
+      flex: 0 0 90px;
+    }
+  }
+
+  /* Footer specific styles (merged from footer.html) */
+  :root {
+    --background-color: #141d2f; /* This will be overridden by body background in main file */
+    --primary-color: #00ac76; /* This will be overridden by primary color in main file */
+    --text-color-light: #cbd5e1; /* This will be overridden by text color in main file */
+    --text-color-lighter: #94a3b8;
+    --icon-bg: rgba(255 255 255 / 0.1);
+    --footer-padding: 4rem 2rem 2rem 2rem;
+    --max-width: 1200px;
+  }
+
+  footer {
+    padding: var(--footer-padding);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    justify-content: space-between;
+    background-color: #141d2f; /* Ensure footer has its own background */
+    color: var(--text-color-light); /* Ensure footer text color */
+    font-family: 'Inter', sans-serif; /* Ensure footer font */
+  }
+
+  .footer-section {
+    flex: 1 1 280px;
+    min-width: 280px;
+  }
+
+  .footer-left h2 {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .footer-left p {
+    line-height: 1.6;
+    font-size: 1rem;
+    color: var(--text-color-lighter);
+    max-width: 320px;
+  }
+
+  .social-icons {
+    margin-top: 1.8rem;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-icons a {
+    background-color: var(--icon-bg);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  .social-icons a:hover,
+  .social-icons a:focus {
+    background-color: var(--primary-color);
+    outline: none;
+  }
+
+  .social-icons svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  /* Links and Contact Sections */
+
+  .footer-col h3 {
+    position: relative;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-col h3::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+  }
+
+  .quick-links a {
+    display: block;
+    margin-bottom: 0.8rem;
+    text-decoration: none;
+    color: var(--text-color-lighter);
+    font-size: 1rem;
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .quick-links a::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--primary-color);
+    font-weight: 700;
+  }
+
+  .quick-links a:hover,
+  .quick-links a:focus {
+    color: white;
+    outline: none;
+  }
+
+  .contact-info {
+    color: var(--text-color-lighter);
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .contact-item svg {
+    fill: var(--primary-color);
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  /* Bottom text */
+
+  .footer-bottom {
+    margin-top: 3rem;
+    border-top: 1px solid rgba(255 255 255 / 0.05);
+    padding-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-color-lighter);
+  }
+
+  /* Footer Scroll to top button (different from main scroll-top-btn) */
+  .footer-scroll-top-btn {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    background: linear-gradient(135deg, #6b48ff 0%, #00ac76 100%);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .footer-scroll-top-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .footer-scroll-top-btn svg {
+    fill: white;
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Responsive for footer */
+  @media (max-width: 768px) {
+    footer {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-section {
+      min-width: 100%;
+      max-width: 480px;
+      text-align: center;
+    }
+
+    .footer-left p,
+    .quick-links a,
+    .contact-info {
+      max-width: 100%;
+    }
+
+    .contact-info {
+      align-items: center;
+    }
+
+    .contact-item {
+      justify-content: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="container" aria-label="Primary Navigation">
+  <div class="logo">Sahil Makwana</div>
+  <ul role="menu" aria-label="Main menu">
+    <li role="menuitem" tabindex="0">Home</li>
+    <li role="menuitem" tabindex="0">Skills</li>
+    <li role="menuitem" tabindex="0">Projects</li>
+    <li role="menuitem" tabindex="0">Services</li>
+    <li role="menuitem" tabindex="0">Testimonials</li>
+    <li role="menuitem" tabindex="0">Contact</li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- Hero / Intro Section -->
+<section class="hero container" id="home" role="region" aria-labelledby="hero-title">
+  <div class="hero-text">
+    <p class="hero-intro" id="hero-intro">Hello, I'm</p>
+    <h1 class="hero-name" id="hero-title">Sahil Makwana</h1>
+    <h2 class="hero-subtitle">Unity Game Developer & Game Designer</h2>
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <div class="hero-tags" aria-label="Professional highlights">
+      <span><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M7.99 1L6 3H2.5A1.5 1.5 0 001 4.5v7A1.5 1.5 0 002.5 13h11a1.5 1.5 0 001.5-1.5v-7A1.5 1.5 0 0013.5 3H10L8.01 1h-.02z" stroke="#5CB3AF" stroke-width="1.5" stroke-linejoin="round"/></svg> Passionate Game Developer</span>
+      <span><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="#5CB3AF" stroke-width="1.5"/><path d="M6 4l4 4-4 4" stroke="#5CB3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Creative Problem Solver</span>
+      <span><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="3" y="2" width="10" height="12" rx="2" ry="2" stroke="#5CB3AF" stroke-width="1.5"/><path d="M6 5h4M6 8h4M6 11h4" stroke="#5CB3AF" stroke-width="1.5" stroke-linecap="round"/></svg> Technical Expert</span>
+    </div>
+
+    <p class="hero-desc">
+      Transforming creative visions into exceptional gaming experiences. Specializing in custom, optimized, and immersive mobile games that engage and delight players.
+    </p>
+
+    <div class="hero-buttons">
+      <button class="btn-primary" type="button" aria-label="View my work">View My Work</button>
+      <!-- <button class="btn-secondary" type="button" aria-label="Hire me">Hire Me</button> -->
+    </div>
+  </div>
+  <div class="hero-image" aria-label="Photo of Milan Togadiya">
+    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/eb67f5bd-2732-488e-8c4e-0306b660c982.png" alt="Portrait photo of Milan Togadiya wearing a mauve shirt, standing near floral decorative walls with warm light" onerror="this.onerror=null;this.src='https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4d5640ee-cc4f-4e14-83be-54d3279d6529.png';" />
+    <div class="floating-icons" aria-hidden="true">
+      <div class="floating-icon icon-unity" title="Unity Icon">
+        <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18" fill="currentColor"><path d="M3 13.5L11 8.25v7.5L3 13.5zm15 2.25L13 16.5v-8.25l5 3.75v4.5z"/><path d="M20.5 7.5 16.5 11.25v1.5L22 9v10l-6.5 3.75v-5.25l4-2.5v-3.75z"/></svg>
+      </div>
+      <div class="floating-icon icon-code" title="Code Icon" style="bottom:18%; left:4%;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18" fill="currentColor"><path d="M10 17l-5-5 5-5v10zm4-10v10l5-5-5-5z"/></svg>
+      </div>
+      <div class="floating-icon icon-mobile" title="Mobile Phone Icon" style="top:22%; right:10%;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18" fill="currentColor"><rect x="7" y="2" width="10" height="20" rx="2" ry="2" stroke="none"/><circle cx="12" cy="20" r="1"/></svg>
+      </div>
+      <div class="floating-icon icon-game" title="Game Controller Icon" style="bottom:10%; right:18%;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18" fill="currentColor"><circle cx="7" cy="12" r="2"/><circle cx="17" cy="12" r="2"/><path d="M2 12c0 6 5 7 10 7s10-1 10-7-5-8-10-8-10 2-10 8z"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section class="section-skills container" id="skills" role="region" aria-labelledby="skills-title">
+  <p class="section-subtitle">My Skills</p>
+  <h2 id="skills-title" class="section-title">My Skills</h2>
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <section class="skills-group" aria-label="Game Development Skills">
+    <h3>Game Development</h3>
+    <div class="skill-icons" role="list" aria-label="Skills related to Game Development">
+      <article class="skill-card" role="listitem" tabindex="0">
+        <div class="skill-icon" aria-hidden="true">🟦</div>
+        <div class="skill-label">Unity</div>
+      </article>
+      <article class="skill-card" role="listitem" tabindex="0">
+        <div class="skill-icon" aria-hidden="true"></></div>
+        <div class="skill-label">C#</div>
+      </article>
+      <article class="skill-card" role="listitem" tabindex="0">
+        <div class="skill-icon" aria-hidden="true">🎮</div>
+        <div class="skill-label">Game Design</div>
+      </article>
+      <article class="skill-card" role="listitem" tabindex="0">
+        <div class="skill-icon" aria-hidden="true">👥</div>
+        <div class="skill-label">Multiplayer</div>
+      </article>
+      <article class="skill-card" role="listitem" tabindex="0">
+        <div class="skill-icon" aria-hidden="true">📱</div>
+        <div class="skill-label">Mobile Games</div>
+      </article>
+      <article class="skill-card" role="listitem" tabindex="0">
+        <div class="skill-icon" aria-hidden="true">▢</div>
+        <div class="skill-label">3D Modeling</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="skills-group" aria-label="Other Skills">
+    <h3>Other Skills</h3>
+    <div class="skill-icons" role="list" aria-label="Other technical skills">
+      <!-- <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">JS</div><div class="skill-label">Node.js</div></article> -->
+      <!-- <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">Php</div><div class="skill-label">PHP</div></article> -->
+      <!-- <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">⚛</div><div class="skill-label">React.js</div></article> -->
+      <!-- <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">🔗</div><div class="skill-label">Socket.io</div></article> -->
+      <!-- <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">🗄</div><div class="skill-label">MongoDB</div></article> -->
+      <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">▶️</div><div class="skill-label">PlayConsole</div></article>
+      <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">🎨</div><div class="skill-label">UI/UX Design</div></article>
+      <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">🌿</div><div class="skill-label">Git</div></article>
+      <!-- <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">⚡</div><div class="skill-label">Performance Optimization</div></article> -->
+      <!-- <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">∞</div><div class="skill-label">CI/CD</div></article> -->
+      <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">🔗</div><div class="skill-label">Photon/Mirror</div></article>
+      <!-- <article class="skill-card" role="listitem" tabindex="0"><div class="skill-icon" aria-hidden="true">⛓</div><div class="skill-label">Blockchain/NFT</div></article> -->
+    </div>
+  </section>
+</section>
+
+<!-- Projects Section -->
+<section class="section-projects container" id="projects" role="region" aria-labelledby="projects-title">
+  <p class="section-subtitle" id="projects-subtitle">My Recent Work</p>
+  <h2 id="projects-title" class="section-title">Featured Projects</h2>
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <div class="projects-list" role="list" aria-label="Featured projects list">
+    <article class="project-card" role="listitem" tabindex="0">
+      <img class="project-image" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9b899689-f37f-4fd9-aa0e-ac52803b1b6c.png" alt="Save The Dog Game - cartoon style game screenshot showing a dog and bees" onerror="this.onerror=null;this.src='https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cd02e135-4293-4640-9689-00e1d22c1c74.png';" />
+      <div class="project-content">
+        <h3 class="project-title">Save The Dog</h3>
+        <p class="project-desc">Draw a single line to protect the dog from angry bees! Use your creativity and timing to shield the dog and survive each level and Use your brain power and logic to pass the level.</p>
+        <div class="project-tags" aria-label="Tags">
+          <span class="project-tag">Unity</span>
+          <span class="project-tag">C#</span>
+          <span class="project-tag">2D</span>
+          <span class="project-tag">Puzzle</span>
+          <span class="project-tag">Hyper Casual</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card" role="listitem" tabindex="0">
+      <img class="project-image" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/45e0f02a-d7d8-4d7b-87a3-e88f4f93ed8a.png" alt="Solitaire Infinite Card Game screenshot showing playing cards in numbered order" onerror="this.onerror=null;this.src='https://placehold.co/400x185?text=Image+Unavailable';" />
+      <div class="project-content">
+        <h3 class="project-title">Solitaire Infinite</h3>
+        <p class="project-desc">Players start with a shuffled deck and aim to stack cards in ascending order by suit, using classic solitaire mechanics. With intuitive drag-and-drop controls, undo options, and endless reshuffling, Solitaire Infinite offers a smooth, relaxing experience for casual players and card game enthusiasts alike.</p>
+        <div class="project-tags" aria-label="Tags">
+          <span class="project-tag">Unity</span>
+          <span class="project-tag">C#</span>
+          <span class="project-tag">2D</span>
+          <span class="project-tag">Card Game</span>
+          <span class="project-tag">Classic</span>
+          <span class="project-tag">Logic Game</span>
+          <span class="project-tag">Brain Training</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card" role="listitem" tabindex="0">
+      <img class="project-image" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3454a5b0-6d0b-4c26-b661-3eb3f6f4bb6d.png" alt="3D Game scene with toy soldiers aiming with guns and in battle formation" onerror="this.onerror=null;this.src='https://placehold.co/400x185?text=Image+Unavailable';" />
+      <div class="project-content">
+        <h3 class="project-title">1000 Soldiers</h3>
+        <p class="project-desc">A strategic battle simulator where you command an ever-growing army across vast lands, facing off against swarms of enemies and powerful bosses. Every decision counts in this epic-scale war game.</p>
+        <div class="project-tags" aria-label="Tags">
+          <span class="project-tag">Unity</span>
+          <span class="project-tag">C#</span>
+          <span class="project-tag">3D</span>
+          <span class="project-tag">Strategy</span>
+          <span class="project-tag">War Simulator</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card" role="listitem" tabindex="0">
+      <img class="project-image" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/82bb3bfd-21d6-4cdd-a2d0-deb01a10b657.png" alt="Puzzle game screenshot Find the Difference with magnifying glass and images" onerror="this.onerror=null;this.src='https://placehold.co/400x185?text=Image+Unavailable';" />
+      <div class="project-content">
+        <h3 class="project-title">Find the Difference – Spot & Solve Puzzle Game</h3>
+        <p class="project-desc">Designed & developed 300+ levels of engaging spot-the-difference puzzles. Integrated hint system, time-based challenges, and Google Play leaderboards. Used AdMob Ads & IAP for better user engagement and monetization.</p>
+        <div class="project-tags" aria-label="Tags">
+          <span class="project-tag">Unity</span>
+          <span class="project-tag">C#</span>
+          <span class="project-tag">2D</span>
+          <span class="project-tag">Puzzle</span>
+          <span class="project-tag">Match Puzzle</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card" role="listitem" tabindex="0">
+      <img class="project-image" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2b4d4461-eadd-47b5-98b2-b2606fa6839b.png" alt="Traffic jam puzzle strategy game screenshot colorful buses in cartoon style" onerror="this.onerror=null;this.src='https://placehold.co/400x185?text=Image+Unavailable';" />
+      <div class="project-content">
+        <h3 class="project-title">Traffic Jam – Puzzle Strategy Game</h3>
+        <p class="project-desc">A brain-training puzzle game where you strategically move and unblock buses stuck in traffic jams. Features hundreds of challenging puzzles designed to improve logic and planning skills.</p>
+        <div class="project-tags" aria-label="Tags">
+          <span class="project-tag">Unity</span>
+          <span class="project-tag">C#</span>
+          <span class="project-tag">3D</span>
+          <span class="project-tag">Puzzle</span>
+          <span class="project-tag">Logic Game</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-card" role="listitem" tabindex="0">
+      <img class="project-image" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/55c8b228-6c6c-4a07-a88c-6519883b522e.png" alt="Word puzzle brain training game screenshot connected letters in a crossword style grid" onerror="this.onerror=null;this.src='https://placehold.co/400x185?text=Image+Unavailable';" />
+      <div class="project-content">
+        <h3 class="project-title">Word of the Word – Brain-Training Word Puzzle Game</h3>
+        <p class="project-desc">An anagram-based word game that combines unscrambling jumbled letters with a crossword-style grid. Features daily challenges, progressive difficulty, and offline play support.</p>
+        <div class="project-tags" aria-label="Tags">
+          <span class="project-tag">Unity</span>
+          <span class="project-tag">C#</span>
+          <span class="project-tag">2D</span>
+          <span class="project-tag">Puzzle</span>
+          <span class="project-tag">Word Game</span>
+          <span class="project-tag">Logic Game</span>
+          <span class="project-tag">Brain Training</span>
+        </div>
+      </div>
+    </article>
+  </div>
+  <div class="projects-cta">
+    <button class="btn-discuss" type="button" aria-label="Discuss Your Project">Discuss Your Project →</button>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="section-services container" id="services" role="region" aria-labelledby="services-title">
+  <p class="section-subtitle" id="services-subtitle">What I Offer</p>
+  <h2 id="services-title" class="section-title">My Services</h2>
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <div class="services-list" role="list" aria-label="List of services offered">
+    <article class="service-card" role="listitem" tabindex="0">
+      <div class="service-icon" aria-hidden="true">🎮</div>
+      <h3 class="service-title">Mobile Game Development</h3>
+      <p class="service-desc">Creating engaging mobile games with optimized performance for both Android and iOS platforms. I focus on smooth gameplay, intuitive controls, and visually appealing designs.</p>
+      <ul class="service-list">
+        <li>Android & iOS</li>
+        <li>Performance Optimization</li>
+        <li>Monetization Integration</li>
+      </ul>
+    </article>
+
+    <article class="service-card" role="listitem" tabindex="0">
+      <div class="service-icon" aria-hidden="true"></></div>
+      <h3 class="service-title">Game Programming</h3>
+      <p class="service-desc">Clean, efficient code implementation for game mechanics and features using Unity and C#. I deliver well-structured, maintainable code that brings your game concepts to life.</p>
+      <ul class="service-list">
+        <li>Custom Game Mechanics</li>
+        <li>AI Development</li>
+        <li>Physics & Gameplay Systems</li>
+      </ul>
+    </article>
+
+    <article class="service-card" role="listitem" tabindex="0">
+      <div class="service-icon" aria-hidden="true">🎨</div>
+      <h3 class="service-title">UI/UX Design</h3>
+      <p class="service-desc">Designing intuitive and attractive game interfaces for better user engagement. I create interfaces that enhance player experience while maintaining your game's unique style.</p>
+      <ul class="service-list">
+        <li>Intuitive Navigation</li>
+        <li>Responsive Layouts</li>
+        <li>Visual Feedback Systems</li>
+      </ul>
+    </article>
+
+    <article class="service-card" role="listitem" tabindex="0">
+      <div class="service-icon" aria-hidden="true">🛠</div>
+      <h3 class="service-title">Bug Fixing & Optimization</h3>
+      <p class="service-desc">Thorough debugging and performance optimization for smooth gameplay experience. I identify and resolve issues to ensure your game runs flawlessly on target platforms.</p>
+      <ul class="service-list">
+        <li>Memory Management</li>
+        <li>Frame Rate Optimization</li>
+        <li>Load Time Reduction</li>
+      </ul>
+    </article>
+  </div>
+  <div class="services-cta">
+    <button class="btn-request" type="button" aria-label="Request Custom Service">Request Custom Service →</button>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section-contact container" id="contact" role="region" aria-labelledby="contact-title">
+  <div class="contact-left">
+    <h2 id="contact-title">Ready to bring your vision to life?</h2>
+    <p>I'm passionate about creating immersive gaming experiences that captivate and engage. Whether you have a concept in mind or need help bringing your ideas to fruition, I'm here to collaborate.</p>
+    <div class="contact-info">
+      <div class="contact-info-item">
+        <div class="contact-icon" aria-hidden="true">✉️</div>
+        <div class="contact-info-text">sammakwana212@gmail.com</div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-icon" aria-hidden="true">📞</div>
+        <div class="contact-info-text">+91 91069 11788</div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-icon" aria-hidden="true">📍</div>
+        <div class="contact-info-text">Surat, Gujarat, India</div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-icon" aria-hidden="true">✔️</div>
+        <div class="contact-info-text">Available for Remote Work</div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-right">
+    <form aria-label="Contact form">
+      <input type="text" name="name" placeholder="Your Name" aria-label="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" aria-label="Your Email" required />
+      <input type="text" name="project" placeholder="Project Type" aria-label="Project Type" />
+      <textarea name="message" placeholder="Tell me about your project" aria-label="Project details"></textarea>
+      <button class="btn-collab" type="submit" aria-label="Start collaboration">Start Collaboration →</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-section footer-left">
+    <h2>Sahil Makwana</h2>
+    <p>Professional Unity Game Developer specializing in creating engaging and optimized gaming experiences for mobile platforms.</p>
+    <div class="social-icons" aria-label="Social media links">
+      <a href="https://github.com/milantogadiya621" target="_blank" rel="noopener" aria-label="GitHub profile">
+        <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+          <path d="M12 0C5.372 0 0 5.372 0 12c0 5.303 3.438 9.8 8.207 11.387.6.11.793-.258.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.204.085 1.838 1.238 1.838 1.238 1.07 1.835 2.807 1.305 3.492.997.108-.775.418-1.305.76-1.605-2.665-.304-5.466-1.334-5.466-5.932 0-1.31.47-2.38 1.236-3.22-.124-.304-.536-1.52.117-3.176 0 0 1.008-.322 3.301 1.23a11.5 11.5 0 013.003-.403c1.02.005 2.04.138 3.003.404 2.29-1.553 3.296-1.23 3.296-1.23.656 1.657.243 2.873.12 3.177.77.84 1.236 1.91 1.236 3.221 0 4.61-2.807 5.625-5.48 5.922.43.37.823 1.103.823 2.222v3.293c0 .321.192.694.8.576C20.565 21.796 24 17.3 24 12 24 5.372 18.627 0 12 0z"/>
+        </svg>
+      </a>
+      <a href="https://linkedin.com/in/milantogadiya" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+        <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.327-.475-2.232-1.66-2.232-0.906 0-1.446.61-1.685 1.201-0.087.212-0.109.507-0.109.805v5.795H10.42s.047-9.398 0-10.374h3.553v1.471c-.007.011-.017.02-.025.03h.025v-.03c.472-.728 1.313-1.763 3.196-1.763 2.335 0 4.086 1.523 4.086 4.793v6.873zM5.337 7.433c-1.144 0-1.89.751-1.89 1.74 0 .97.719 1.741 1.847 1.741h.022c1.171 0 1.89-.77 1.89-1.741-.022-.989-.72-1.74-1.87-1.74zm-1.777 13.02H7.11V10.08H3.56v10.374zM22.225 0H1.771C.792 0 0 .783 0 1.748v20.504C0 23.2.792 24 1.771 24H22.22c.98 0 1.78-.8 1.78-1.748V1.748C24 .783 23.204 0 22.225 0z"/>
+        </svg>
+      </a>
+      <a href="mailto:milantogadiya621@gmail.com" aria-label="Send email to Milan Togadiya">
+        <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+          <path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.104 0 2-.897 2-2V6c0-1.103-.896-2-2-2zM4 8.414l7.293 7.292c.39.39 1.023.39 1.414 0L20 8.414V6l-8 7L4 6v2.414z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-section footer-col quick-links" role="navigation" aria-label="Quick links">
+    <h3>Quick Links</h3>
+    <a href="#home" tabindex="0" class="scroll-link">Home</a>
+    <a href="#skills" tabindex="0" class="scroll-link">Skills</a>
+    <a href="#projects" tabindex="0" class="scroll-link">Projects</a>
+    <a href="#services" tabindex="0" class="scroll-link">Services</a>
+    <!-- If you add a testimonials section, ensure it has id="testimonials" -->
+    <!-- For now, if no testimonials section exists, you might remove or comment this line -->
+    <!-- <a href="#testimonials" tabindex="0" class="scroll-link">Testimonials</a> -->
+    <a href="#contact" tabindex="0" class="scroll-link">Contact</a>
+  </div>
+
+  <div class="footer-section footer-col contact-info" aria-label="Contact Information">
+    <h3>Contact Info</h3>
+    <div class="contact-item">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+        <path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.104 0 2-.897 2-2V6c0-1.103-.896-2-2-2zM4 8.414l7.293 7.292c.39.39 1.023.39 1.414 0L20 8.414V6l-8 7-8-7v2.414z"/>
+      </svg>
+      <a href="mailto:sammakwana212@gmail.com" tabindex="0" style="color: var(--text-color-lighter); text-decoration:none;">sammakwana212@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+        <path d="M6.62 10.79a15.072 15.072 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21 11.507 11.507 0 003.49.56 1 1 0 011 1v3.5a1 1 0 01-1 1A17.93 17.93 0 013 6a1 1 0 011-1h3.5a1 1 0 011 1 11.506 11.506 0 00.56 3.49 1 1 0 01-.21 1.11l-2.23 2.2z"/>
+      </svg>
+      <a href="tel:+919106911788" tabindex="0" style="color: var(--text-color-lighter); text-decoration:none;">+91 91069 11788</a>
+    </div>
+    <div class="contact-item">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 5.25 11 7 13 1.75-2 7-7.75 7-13 0-3.87-3.13-7-7-7zm0 9a2 2 0 110-4 2 2 0 010 4z"/>
+      </svg>
+      <span>Surat, Gujarat, India</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Combined Scroll to top button -->
+<button aria-label="Scroll to top" id="scrollTopBtn" class="scroll-top-btn" title="Scroll to top">
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+    <path d="M12 4l-6 6h12z"/>
+  </svg>
+</button>
+
+<script>
+  // Smooth scroll to top button
+  const scrollBtn = document.getElementById('scrollTopBtn');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) { // Using 300px as threshold from main file
+      scrollBtn.classList.add('show'); // Use 'show' class from main file
+    } else {
+      scrollBtn.classList.remove('show');
+    }
+  });
+  scrollBtn.addEventListener('click', () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+
+  // Smooth scrolling for navigation and footer links
+  document.querySelectorAll('nav ul li, .scroll-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+      let targetId;
+      if (this.tagName === 'LI') { // For navigation list items
+        // The text content of nav list items directly corresponds to the section ID (e.g., "Home" -> "home")
+        targetId = this.textContent.toLowerCase().replace(/\s/g, '');
+      } else if (this.tagName === 'A') { // For anchor tags (like in footer quick links)
+        // The href attribute of anchor tags contains the section ID (e.g., "#home" -> "home")
+        targetId = this.getAttribute('href').substring(1);
+      }
+
+      const targetElement = document.getElementById(targetId);
+
+      if (targetElement) {
+        e.preventDefault(); // Prevent default anchor link behavior (instant jump)
+        targetElement.scrollIntoView({
+          behavior: 'smooth' // Enable smooth scrolling
+        });
+      } else {
+        console.warn(`Section with ID '${targetId}' not found.`); // Log a warning if the target section doesn't exist
+      }
+    });
+  });
+
+  // Optional: Intersection Observer for section animations on scroll
+  const sections = document.querySelectorAll('section');
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const sectionObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    section.classList.add('fade-in-section');
+    sectionObserver.observe(section);
+  });
+</script>
+
+</body>
+</html>
