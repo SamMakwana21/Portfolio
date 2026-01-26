@@ -25,7 +25,7 @@ html {
 
 
 body {
-  cursor: url("assets/cursor.png"), auto;
+    cursor: url("assets/cursor.png"), auto;
 }
 
 
@@ -210,14 +210,16 @@ body {
     position: relative;
     padding-left: 20px;
 } */
- 
+
 .subtitle {
     color: var(--accent-color);
     font-size: 1.2rem;
     margin-bottom: 1rem;
-    display: flex; /* changed from block */
+    display: flex;
+    /* changed from block */
     align-items: center;
-    gap: 8px; /* spacing between arrow and text */
+    gap: 8px;
+    /* spacing between arrow and text */
 }
 
 .subtitle::before {
@@ -486,9 +488,12 @@ section h2::after {
 
 .skill-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 32px rgba(109, 40, 217, 0.2);  /* Purple glow */
-    background: rgba(109, 40, 217, 0.1);  /* Slight purple tint */
-    border-color: rgba(109, 40, 217, 0.3);  /* Purple border */
+    box-shadow: 0 8px 32px rgba(109, 40, 217, 0.2);
+    /* Purple glow */
+    background: rgba(109, 40, 217, 0.1);
+    /* Slight purple tint */
+    border-color: rgba(109, 40, 217, 0.3);
+    /* Purple border */
 }
 
 .skill-icon {
@@ -539,12 +544,30 @@ section h2::after {
     margin-bottom: 4rem;
 }
 
+/* Project Link Styling */
+.project-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+    transition: all 0.3s ease;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.project-link:hover {
+    background: transparent !important;
+}
+
 .project-card {
     background: var(--card-bg);
     border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     height: 100%;
     display: flex;
@@ -554,18 +577,23 @@ section h2::after {
 .project-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(109, 40, 217, 0.2);
-    border-color: rgba(109, 40, 217, 0.1);
+    border-color: rgba(109, 40, 217, 0.3);
 }
 
 .project-image {
     position: relative;
     overflow: hidden;
+    background: var(--darker-card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
 }
 
 .project-image img {
     width: 100%;
     height: 220px;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.5s ease;
 }
 
@@ -881,19 +909,24 @@ section h2::after {
     transition: transform 0.3s ease;
 } */
 .contact-item {
-  display: flex;
-  align-items: center; /* vertical center alignment */
-  gap: 10px; /* space between icon and text */
-  margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    /* vertical center alignment */
+    gap: 10px;
+    /* space between icon and text */
+    margin-bottom: 10px;
 }
+
 .contact-item i {
-  font-size: 20px;
-  color: #00ffcc; /* optional - icon color */
+    font-size: 20px;
+    color: #00ffcc;
+    /* optional - icon color */
 }
+
 .contact-item p {
-  margin: 0;
-  font-size: 16px;
-  color: #ccc;
+    margin: 0;
+    font-size: 16px;
+    color: #ccc;
 }
 
 .contact-item:hover {
@@ -945,10 +978,10 @@ section h2::after {
     pointer-events: none;
 }
 
-.form-group input:focus ~ label,
-.form-group input:valid ~ label,
-.form-group textarea:focus ~ label,
-.form-group textarea:valid ~ label {
+.form-group input:focus~label,
+.form-group input:valid~label,
+.form-group textarea:focus~label,
+.form-group textarea:valid~label {
     top: -0.5rem;
     left: 0.5rem;
     font-size: 0.8rem;
@@ -1084,19 +1117,21 @@ footer::before {
 }
 
 .footer-links a {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
-  padding-left: 20px; /* space for the arrow */
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 20px;
+    /* space for the arrow */
 }
 
 .footer-links a::before {
-  content: '➤'; /* stylish arrow */
-  position: absolute;
-  left: 0;
-  font-size: 0.9rem;
-  color: var(--accent-color);
+    content: '➤';
+    /* stylish arrow */
+    position: absolute;
+    left: 0;
+    font-size: 0.9rem;
+    color: var(--accent-color);
 }
 
 .footer-links a:hover {
@@ -1163,6 +1198,7 @@ footer::before {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -1170,19 +1206,25 @@ footer::before {
 }
 
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-20px);
     }
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         opacity: 0.15;
     }
+
     50% {
         transform: scale(1.1);
         opacity: 0.2;
@@ -1244,23 +1286,23 @@ footer::before {
         transition: transform 0.3s ease-in;
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
     }
-    
+
     .nav-links.open {
         transform: translateX(0);
     }
-    
+
     .burger {
         display: block;
     }
-    
+
     .burger.toggle .line1 {
         transform: rotate(-45deg) translate(-5px, 6px);
     }
-    
+
     .burger.toggle .line2 {
         opacity: 0;
     }
-    
+
     .burger.toggle .line3 {
         transform: rotate(45deg) translate(-5px, -6px);
     }
@@ -1375,7 +1417,7 @@ footer::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
     transform: translateX(-100%);
     transition: transform 0.6s ease;
 }
@@ -1512,6 +1554,7 @@ footer::before {
     transition: opacity 0.3s, background 0.3s;
     opacity: 0.85;
 }
+
 #backToTop:hover {
     background: var(--accent-color);
     color: #fff;
@@ -1522,6 +1565,7 @@ footer::before {
     background: var(--card-bg);
     padding: 100px 5%;
 }
+
 .about-content {
     max-width: 900px;
     margin: 0 auto;
@@ -1534,6 +1578,7 @@ footer::before {
     line-height: 1.8;
     opacity: 0.95;
 }
+
 .about h2 {
     text-align: center;
     color: var(--accent-color);
@@ -1563,4 +1608,4 @@ footer::before {
     font-size: 1.1rem;
     line-height: 1.8;
     margin-top: 1rem;
-} 
+}
