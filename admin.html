@@ -8,6 +8,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        /* ─── Security: Disable text selection ─── */
+        * {
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            user-select: none !important;
+        }
+
+        input,
+        textarea {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            user-select: text !important;
+        }
+    </style>
+    <script>
+        // Block right-click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        // Block DevTools keyboard shortcuts
+        document.addEventListener('keydown', e => {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                (e.ctrlKey && e.key === 'U') ||
+                (e.ctrlKey && e.key === 'S') ||
+                (e.ctrlKey && e.key === 'A') ||
+                (e.ctrlKey && e.key === 'C')
+            ) { e.preventDefault(); e.stopPropagation(); }
+        });
+    </script>
+    <style>
         :root {
             --bg: #0f0f1a;
             --card: #1a1a2e;
@@ -960,6 +990,18 @@
                     <i class="fas fa-gamepad"></i> Projects
                     <span class="badge" id="badge-projects">0</span>
                 </button>
+                <button class="nav-item" onclick="switchTab('education')" id="tab-btn-education">
+                    <i class="fas fa-graduation-cap"></i> Education
+                    <span class="badge" id="badge-education">0</span>
+                </button>
+                <button class="nav-item" onclick="switchTab('skills')" id="tab-btn-skills">
+                    <i class="fas fa-tools"></i> Skills
+                    <span class="badge" id="badge-skills">0</span>
+                </button>
+                <button class="nav-item" onclick="switchTab('services')" id="tab-btn-services">
+                    <i class="fas fa-briefcase"></i> Services
+                    <span class="badge" id="badge-services">0</span>
+                </button>
                 <button class="nav-item" onclick="switchTab('profile')" id="tab-btn-profile">
                     <i class="fas fa-user"></i> Profile
                 </button>
@@ -1020,6 +1062,63 @@
                 </div>
             </div>
 
+            <!-- Education Tab -->
+            <div class="tab-panel" id="tab-education">
+                <div class="page-header">
+                    <h1>Education</h1>
+                    <p>Manage your education history</p>
+                </div>
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <h2>All Education</h2>
+                        <button class="btn-add" onclick="openEducationModal()">
+                            <i class="fas fa-plus"></i> Add Education
+                        </button>
+                    </div>
+                    <div class="projects-list" id="education-list">
+                        <div class="loading"><span class="spinner"></span> Loading education...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Tab -->
+            <div class="tab-panel" id="tab-skills">
+                <div class="page-header">
+                    <h1>Skills</h1>
+                    <p>Manage your technical and other skills</p>
+                </div>
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <h2>All Skills</h2>
+                        <button class="btn-add" onclick="openSkillModal()">
+                            <i class="fas fa-plus"></i> Add Skill
+                        </button>
+                    </div>
+                    <div class="projects-list" id="skills-list">
+                        <div class="loading"><span class="spinner"></span> Loading skills...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Tab -->
+            <div class="tab-panel" id="tab-services">
+                <div class="page-header">
+                    <h1>Services</h1>
+                    <p>Manage services you offer</p>
+                </div>
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <h2>All Services</h2>
+                        <button class="btn-add" onclick="openServiceModal()">
+                            <i class="fas fa-plus"></i> Add Service
+                        </button>
+                    </div>
+                    <div class="projects-list" id="services-list">
+                        <div class="loading"><span class="spinner"></span> Loading services...</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Profile Tab -->
             <div class="tab-panel" id="tab-profile">
                 <div class="page-header">
@@ -1076,6 +1175,23 @@
                             <div class="field">
                                 <label>LinkedIn URL</label>
                                 <input type="url" id="prof-linkedin" placeholder="https://linkedin.com/in/...">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="field">
+                                <label>Profile Image URL</label>
+                                <input type="url" id="prof-img" placeholder="assets/Profile3.jpg">
+                            </div>
+                            <div class="field">
+                                <label>Instagram URL</label>
+                                <input type="url" id="prof-instagram" placeholder="https://instagram.com/...">
+                            </div>
+                        </div>
+                        <div class="form-row full">
+                            <div class="field">
+                                <label>Footer Bio / Short About</label>
+                                <textarea id="prof-footer-bio"
+                                    placeholder="Short description shown in the footer..."></textarea>
                             </div>
                         </div>
                         <button class="btn-save" onclick="saveProfile()">
@@ -1151,6 +1267,125 @@
         </div>
     </div>
 
+    <!-- ─── ADD / EDIT EDUCATION MODAL ─── -->
+    <div class="modal-overlay" id="education-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-title-education">Add Education</h2>
+                <button class="btn-close" onclick="closeEducationModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="field">
+                <label>Degree / Certificate *</label>
+                <input type="text" id="edu-degree-input" placeholder="Bachelor of Computer Applications (BCA)">
+            </div>
+            <div class="field">
+                <label>Institute *</label>
+                <input type="text" id="edu-institute-input" placeholder="Bhagwan Mahaveer University, Surat">
+            </div>
+            <div class="field">
+                <label>Year / Duration *</label>
+                <input type="text" id="edu-year-input" placeholder="2022 – 2025">
+            </div>
+            <div class="field">
+                <label>Board / University</label>
+                <input type="text" id="edu-board-input" placeholder="Bhagwan Mahaveer University">
+            </div>
+            <div class="field">
+                <label>Location</label>
+                <input type="text" id="edu-location-input" placeholder="Surat, Gujarat, India">
+            </div>
+            <div class="field">
+                <label>Image URL</label>
+                <input type="url" id="edu-img-input" placeholder="assets/bca-college.jpg">
+            </div>
+            <div class="field">
+                <label>Display Order (lower = first)</label>
+                <input type="number" id="edu-order-input" placeholder="1" value="1">
+            </div>
+            <div style="display:flex; gap:12px; margin-top:24px;">
+                <button class="btn-save" style="flex:1" onclick="saveEducation()">
+                    <i class="fas fa-save"></i> &nbsp;<span id="modal-save-text-education">Add Education</span>
+                </button>
+                <button class="btn-close" style="width:auto;padding:0 20px"
+                    onclick="closeEducationModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── ADD / EDIT SKILL MODAL ─── -->
+    <div class="modal-overlay" id="skill-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-title-skill">Add Skill</h2>
+                <button class="btn-close" onclick="closeSkillModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="field">
+                <label>Category *</label>
+                <input type="text" id="skill-category-input" placeholder="Game Development">
+            </div>
+            <div class="field">
+                <label>Skill Name *</label>
+                <input type="text" id="skill-name-input" placeholder="Unity">
+            </div>
+            <div class="field">
+                <label>Icon Class (Bootstrap/FontAwesome)</label>
+                <input type="text" id="skill-icon-input" placeholder="bi-unity">
+            </div>
+            <div class="field">
+                <label>Display Order (lower = first)</label>
+                <input type="number" id="skill-order-input" placeholder="1" value="1">
+            </div>
+            <div style="display:flex; gap:12px; margin-top:24px;">
+                <button class="btn-save" style="flex:1" onclick="saveSkill()">
+                    <i class="fas fa-save"></i> &nbsp;<span id="modal-save-text-skill">Add Skill</span>
+                </button>
+                <button class="btn-close" style="width:auto;padding:0 20px" onclick="closeSkillModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── ADD / EDIT SERVICE MODAL ─── -->
+    <div class="modal-overlay" id="service-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-title-service">Add Service</h2>
+                <button class="btn-close" onclick="closeServiceModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="field">
+                <label>Title *</label>
+                <input type="text" id="srv-title-input" placeholder="Mobile Game Development">
+            </div>
+            <div class="field">
+                <label>Description *</label>
+                <textarea id="srv-desc-input" placeholder="Building immersive..." style="min-height:80px"></textarea>
+            </div>
+            <div class="field">
+                <label>Icon Class</label>
+                <input type="text" id="srv-icon-input" placeholder="fas fa-gamepad">
+            </div>
+            <div class="field">
+                <label>Features (Press Enter to add)</label>
+                <div class="tags-input-row">
+                    <input type="text" id="srv-feature-input" placeholder="Add a feature"
+                        onkeydown="if(event.key==='Enter'){event.preventDefault();addServiceFeature()}">
+                    <button class="btn-tag-add" onclick="addServiceFeature()"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="tags-preview" id="srv-features-preview"></div>
+            </div>
+            <div class="field">
+                <label>Display Order (lower = first)</label>
+                <input type="number" id="srv-order-input" placeholder="1" value="1">
+            </div>
+            <div style="display:flex; gap:12px; margin-top:24px;">
+                <button class="btn-save" style="flex:1" onclick="saveService()">
+                    <i class="fas fa-save"></i> &nbsp;<span id="modal-save-text-service">Add Service</span>
+                </button>
+                <button class="btn-close" style="width:auto;padding:0 20px"
+                    onclick="closeServiceModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
@@ -1164,7 +1399,7 @@
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import {
             collection, getDocs, addDoc, updateDoc, deleteDoc,
-            doc, setDoc, getDoc, query, orderBy, serverTimestamp
+            doc, setDoc, getDoc, query, orderBy, serverTimestamp, writeBatch
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // ─── State ───
@@ -1172,17 +1407,132 @@
         let editingProjectId = null;
         let currentTags = [];
 
+        let currentEducation = [];
+        let editingEduId = null;
+
+        let currentSkills = [];
+        let editingSkillId = null;
+
+        let currentServices = [];
+        let editingServiceId = null;
+        let currentServiceFeatures = [];
+
+        // ── Default Projects for Seeding ──
+        const BASE = 'https://sammakwana21.github.io/Portfolio/assets/';
+        const DEFAULT_PROJECTS = [
+            {
+                order: 1,
+                title: 'Save The Dog',
+                description: 'A fun physics-based puzzle where you draw a shield to protect the dog from a swarm of angry bees! Test your timing, logic, and quick thinking as each level introduces new challenges and traps. Perfect for hyper-casual players who love clever mechanics with a simple twist.',
+                imageUrl: BASE + 'SaveTheDog.jpg',
+                link: '',
+                tags: ['Unity', 'C#', '2D', 'Puzzle', 'Logic Game', 'SaveTheDog']
+            },
+            {
+                order: 2,
+                title: 'Solitaire Offline Card Game',
+                description: 'Players begin with a shuffled deck and aim to stack cards in ascending order by suit — just like classic solitaire. Featuring intuitive drag-and-drop controls, undo options, and unlimited reshuffling, the game delivers a smooth, relaxing experience for both casual players and card game lovers. Built for offline play.',
+                imageUrl: BASE + 'SolitaireOffline.jpg',
+                link: 'https://drive.google.com/file/d/1togNlk8qDZTKhkn0SsS3zfJ4_PZfRd9F/view?usp=sharing',
+                tags: ['Unity', 'C#', '2D', 'Card Game', 'Classic', 'Solitaire', 'Offline Game']
+            },
+            {
+                order: 3,
+                title: 'Find Difference & Solve The Puzzle',
+                description: 'Sharpen your eyes and spot the smallest visual changes across 300+ unique levels! Find hidden differences, solve visual brain teasers, and beat the clock. Integrated with hints, zoom, and leaderboards for a complete puzzle-solving experience.',
+                imageUrl: BASE + 'FindDifferences.png',
+                link: 'https://drive.google.com/file/d/1jybXEoeW1dRu5K7HR0NQAyaVauwosCUW/view?usp=sharing',
+                tags: ['Unity', 'C#', '2D', 'Puzzle', 'Find The Differences', 'Brain Teaser']
+            },
+            {
+                order: 4,
+                title: 'Short The Ball - Puzzle Game',
+                description: 'A fun and addictive color-sorting puzzle game where you organize balls into tubes based on color. Test your logic and strategy skills with hundreds of levels that increase in difficulty. Easy to play, challenging to master!',
+                imageUrl: BASE + 'ShortTheBall.jpg',
+                link: '',
+                tags: ['Unity', 'C#', '3D', 'Puzzle', 'Logic', 'Shorting Game']
+            },
+            {
+                order: 5,
+                title: 'Castle Dodge: Survival Run',
+                description: 'A fast-paced 2D mobile survival arcade game where players dodge falling rocks and missiles while collecting coins to survive as long as possible. Featuring a heart-based health system, score tracking, particle effects, and ad-integrated gameplay, set in a vibrant fantasy castle environment.',
+                imageUrl: BASE + 'CastleDodgeSurvivalRun.jpg',
+                link: 'https://drive.google.com/file/d/1ldkRodQzmNptY88l3iSKajYypS_xcbZ9/view?usp=sharing',
+                tags: ['Unity', 'C#', '2D', 'Survival', 'Castle Dodge', 'Run Game', 'Ad Integrated']
+            },
+            {
+                order: 6,
+                title: 'Yasuke vs Oda – Samurai Combat Arena',
+                description: 'A 3D mobile combat fighting game inspired by Feudal Japan, featuring an intense one-on-one battle between Yasuke and Oda. Players use Punch, Kick, Heavy Attack, Pushback, Block, Roll, Jump, Run, and combo attacks, enhanced with particle effects, hit flashes, and damage feedback. A complete round-based system with health and stamina bars.',
+                imageUrl: BASE + 'CombatGame.jpg',
+                link: 'https://drive.google.com/file/d/1QGJEkgJVDPUPQEzR0yyPT3J44hD264BV/view?usp=sharing',
+                tags: ['Unity', 'C#', 'Unity 3D', 'Combat', 'Samurai Game', 'Action RPG', 'Melee Fighting']
+            }
+        ];
+
+        async function seedDefaultProjects() {
+            for (const p of DEFAULT_PROJECTS) {
+                await addDoc(collection(db, 'projects'), p);
+            }
+        }
+
+        // ─── Auto-logout (2 min inactivity) ───
+        const INACTIVITY_LIMIT = 2 * 60 * 1000; // 2 minutes
+        const WARN_BEFORE = 30 * 1000;           // warn 30s before logout
+        let inactivityTimer = null;
+        let warnTimer = null;
+        let isLoggedIn = false;
+
+        function resetInactivityTimer() {
+            if (!isLoggedIn) return;
+            clearTimeout(inactivityTimer);
+            clearTimeout(warnTimer);
+            // 30-second warning
+            warnTimer = setTimeout(() => {
+                showToast('⚠️ Inactive! Auto-logout in 30 seconds...', 'error');
+            }, INACTIVITY_LIMIT - WARN_BEFORE);
+            // Actual logout
+            inactivityTimer = setTimeout(async () => {
+                showToast('Session expired. Logging out...', 'error');
+                await new Promise(r => setTimeout(r, 1500));
+                await signOut(auth);
+            }, INACTIVITY_LIMIT);
+        }
+
+        // Track user activity
+        ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach(evt => {
+            document.addEventListener(evt, resetInactivityTimer, { passive: true });
+        });
+
+        // Track tab visibility — pause timer when tab hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                clearTimeout(inactivityTimer);
+                clearTimeout(warnTimer);
+            } else if (isLoggedIn) {
+                resetInactivityTimer();
+            }
+        });
+
         // ─── Auth State ───
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                isLoggedIn = true;
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'flex';
                 document.getElementById('admin-email-display').textContent = user.email;
                 loadProjects();
+                loadEducation();
+                loadSkills();
+                loadServices();
                 loadProfile();
                 loadContacts();
                 document.getElementById('stats-row').style.display = 'grid';
+                resetInactivityTimer();
             } else {
+                isLoggedIn = false;
+                clearTimeout(inactivityTimer);
+                clearTimeout(warnTimer);
                 document.getElementById('login-screen').style.display = 'flex';
                 document.getElementById('dashboard').style.display = 'none';
             }
@@ -1241,6 +1591,13 @@
             try {
                 const q = query(collection(db, 'projects'), orderBy('order'));
                 const snap = await getDocs(q);
+
+                if (snap.empty) {
+                    // Seed defaults if Firestore is empty
+                    await seedDefaultProjects();
+                    return loadProjects();
+                }
+
                 currentProjects = [];
                 snap.forEach(d => currentProjects.push({ id: d.id, ...d.data() }));
                 renderProjects();
@@ -1339,16 +1696,35 @@
             const desc = document.getElementById('proj-desc-input').value.trim();
             if (!title || !desc) { showToast('Title and description are required.', 'error'); return; }
 
+            const newOrder = parseInt(document.getElementById('proj-order-input').value) || 1;
+
             const data = {
                 title,
                 description: desc,
                 imageUrl: document.getElementById('proj-img-input').value.trim(),
                 link: document.getElementById('proj-link-input').value.trim(),
                 tags: currentTags,
-                order: parseInt(document.getElementById('proj-order-input').value) || 1,
+                order: newOrder,
             };
 
             try {
+                // ── Find projects that need to be shifted ──
+                // For new project: shift all projects with order >= newOrder
+                // For edit: shift all projects with order >= newOrder, excluding the one being edited
+                const toShift = currentProjects.filter(p => {
+                    if (editingProjectId && p.id === editingProjectId) return false;
+                    return p.order >= newOrder;
+                });
+
+                if (toShift.length > 0) {
+                    // Use batch to update all conflicting projects' order +1
+                    const batch = writeBatch(db);
+                    toShift.forEach(p => {
+                        batch.update(doc(db, 'projects', p.id), { order: p.order + 1 });
+                    });
+                    await batch.commit();
+                }
+
                 if (editingProjectId) {
                     await updateDoc(doc(db, 'projects', editingProjectId), data);
                     showToast('Project updated!', 'success');
@@ -1359,6 +1735,7 @@
                 closeProjectModal();
                 loadProjects();
             } catch (e) {
+                console.error(e);
                 showToast('Error saving project.', 'error');
             }
         };
@@ -1374,22 +1751,409 @@
             }
         };
 
+        // ─── EDUCATION ───
+        async function loadEducation() {
+            const list = document.getElementById('education-list');
+            try {
+                const q = query(collection(db, 'education'), orderBy('order'));
+                const snap = await getDocs(q);
+                currentEducation = [];
+                snap.forEach(d => currentEducation.push({ id: d.id, ...d.data() }));
+
+                document.getElementById('badge-education').textContent = currentEducation.length;
+                renderEducation();
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load education.</p></div>`;
+            }
+        }
+
+        function renderEducation() {
+            const list = document.getElementById('education-list');
+            if (currentEducation.length === 0) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-graduation-cap"></i><p>No education entries yet.</p></div>`;
+                return;
+            }
+            list.innerHTML = currentEducation.map(e => `
+            <div class="project-item">
+                <div class="project-thumb">
+                    ${e.imageUrl ? `<img src="${e.imageUrl}" alt="${e.degree}">` : '<i class="fas fa-graduation-cap"></i>'}
+                </div>
+                <div class="project-details">
+                    <h3>${e.degree}</h3>
+                    <p>${e.institute} | ${e.year}</p>
+                </div>
+                <div class="project-actions">
+                    <button class="btn-icon edit" title="Edit" onclick="openEditEducation('${e.id}')"><i class="fas fa-edit"></i></button>
+                    <button class="btn-icon delete" title="Delete" onclick="deleteEducation('${e.id}', '${e.degree.replace(/'/g, "\\'")}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            `).join('');
+        }
+
+        window.openEducationModal = function () {
+            editingEduId = null;
+            document.getElementById('modal-title-education').textContent = 'Add Education';
+            document.getElementById('modal-save-text-education').textContent = 'Add Education';
+            document.getElementById('edu-degree-input').value = '';
+            document.getElementById('edu-institute-input').value = '';
+            document.getElementById('edu-year-input').value = '';
+            document.getElementById('edu-board-input').value = '';
+            document.getElementById('edu-location-input').value = '';
+            document.getElementById('edu-img-input').value = '';
+            document.getElementById('edu-order-input').value = currentEducation.length + 1;
+            document.getElementById('education-modal').classList.add('open');
+        };
+
+        window.openEditEducation = function (id) {
+            const e = currentEducation.find(x => x.id === id);
+            if (!e) return;
+            editingEduId = id;
+            document.getElementById('modal-title-education').textContent = 'Edit Education';
+            document.getElementById('modal-save-text-education').textContent = 'Save Changes';
+            document.getElementById('edu-degree-input').value = e.degree || '';
+            document.getElementById('edu-institute-input').value = e.institute || '';
+            document.getElementById('edu-year-input').value = e.year || '';
+            document.getElementById('edu-board-input').value = e.boardOrUniv || '';
+            document.getElementById('edu-location-input').value = e.location || '';
+            document.getElementById('edu-img-input').value = e.imageUrl || '';
+            document.getElementById('edu-order-input').value = e.order || 1;
+            document.getElementById('education-modal').classList.add('open');
+        };
+
+        window.closeEducationModal = function () {
+            document.getElementById('education-modal').classList.remove('open');
+        };
+
+        window.saveEducation = async function () {
+            const degree = document.getElementById('edu-degree-input').value.trim();
+            const institute = document.getElementById('edu-institute-input').value.trim();
+            const year = document.getElementById('edu-year-input').value.trim();
+
+            if (!degree || !institute || !year) {
+                showToast('Degree, Institute, and Year are required.', 'error');
+                return;
+            }
+
+            const data = {
+                degree,
+                institute,
+                year,
+                boardOrUniv: document.getElementById('edu-board-input').value.trim(),
+                location: document.getElementById('edu-location-input').value.trim(),
+                imageUrl: document.getElementById('edu-img-input').value.trim(),
+                order: parseInt(document.getElementById('edu-order-input').value) || 1,
+            };
+
+            try {
+                if (editingEduId) {
+                    await updateDoc(doc(db, 'education', editingEduId), data);
+                    showToast('Education updated!', 'success');
+                } else {
+                    await addDoc(collection(db, 'education'), data);
+                    showToast('Education added!', 'success');
+                }
+                closeEducationModal();
+                loadEducation();
+            } catch (err) {
+                showToast('Error saving education.', 'error');
+            }
+        };
+
+        window.deleteEducation = async function (id, title) {
+            if (!confirm(`Delete "${title}"?`)) return;
+            try {
+                await deleteDoc(doc(db, 'education', id));
+                showToast('Education deleted.', 'success');
+                loadEducation();
+            } catch (e) {
+                showToast('Error deleting education.', 'error');
+            }
+        };
+
+        // ─── SKILLS ───
+        async function loadSkills() {
+            const list = document.getElementById('skills-list');
+            try {
+                const q = query(collection(db, 'skills'), orderBy('order'));
+                const snap = await getDocs(q);
+                currentSkills = [];
+                snap.forEach(d => currentSkills.push({ id: d.id, ...d.data() }));
+
+                document.getElementById('badge-skills').textContent = currentSkills.length;
+                renderSkills();
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load skills.</p></div>`;
+            }
+        }
+
+        function renderSkills() {
+            const list = document.getElementById('skills-list');
+            if (currentSkills.length === 0) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-tools"></i><p>No skills entries yet.</p></div>`;
+                return;
+            }
+            list.innerHTML = currentSkills.map(s => `
+            <div class="project-item">
+                <div class="project-thumb">
+                    <i class="bi ${s.icon || 'bi-star'}"></i>
+                </div>
+                <div class="project-details">
+                    <h3>${s.name}</h3>
+                    <p>${s.category}</p>
+                </div>
+                <div class="project-actions">
+                    <button class="btn-icon edit" title="Edit" onclick="openEditSkill('${s.id}')"><i class="fas fa-edit"></i></button>
+                    <button class="btn-icon delete" title="Delete" onclick="deleteSkill('${s.id}', '${s.name.replace(/'/g, "\\'")}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            `).join('');
+        }
+
+        window.openSkillModal = function () {
+            editingSkillId = null;
+            document.getElementById('modal-title-skill').textContent = 'Add Skill';
+            document.getElementById('modal-save-text-skill').textContent = 'Add Skill';
+            document.getElementById('skill-category-input').value = '';
+            document.getElementById('skill-name-input').value = '';
+            document.getElementById('skill-icon-input').value = '';
+            document.getElementById('skill-order-input').value = currentSkills.length + 1;
+            document.getElementById('skill-modal').classList.add('open');
+        };
+
+        window.openEditSkill = function (id) {
+            const s = currentSkills.find(x => x.id === id);
+            if (!s) return;
+            editingSkillId = id;
+            document.getElementById('modal-title-skill').textContent = 'Edit Skill';
+            document.getElementById('modal-save-text-skill').textContent = 'Save Changes';
+            document.getElementById('skill-category-input').value = s.category || '';
+            document.getElementById('skill-name-input').value = s.name || '';
+            document.getElementById('skill-icon-input').value = s.icon || '';
+            document.getElementById('skill-order-input').value = s.order || 1;
+            document.getElementById('skill-modal').classList.add('open');
+        };
+
+        window.closeSkillModal = function () {
+            document.getElementById('skill-modal').classList.remove('open');
+        };
+
+        window.saveSkill = async function () {
+            const category = document.getElementById('skill-category-input').value.trim();
+            const name = document.getElementById('skill-name-input').value.trim();
+
+            if (!category || !name) {
+                showToast('Category and Name are required.', 'error');
+                return;
+            }
+
+            const data = {
+                category,
+                name,
+                icon: document.getElementById('skill-icon-input').value.trim(),
+                order: parseInt(document.getElementById('skill-order-input').value) || 1,
+            };
+
+            try {
+                if (editingSkillId) {
+                    await updateDoc(doc(db, 'skills', editingSkillId), data);
+                    showToast('Skill updated!', 'success');
+                } else {
+                    await addDoc(collection(db, 'skills'), data);
+                    showToast('Skill added!', 'success');
+                }
+                closeSkillModal();
+                loadSkills();
+            } catch (err) {
+                showToast('Error saving skill.', 'error');
+            }
+        };
+
+        window.deleteSkill = async function (id, title) {
+            if (!confirm(`Delete "${title}"?`)) return;
+            try {
+                await deleteDoc(doc(db, 'skills', id));
+                showToast('Skill deleted.', 'success');
+                loadSkills();
+            } catch (e) {
+                showToast('Error deleting skill.', 'error');
+            }
+        };
+
+        // ─── SERVICES ───
+        async function loadServices() {
+            const list = document.getElementById('services-list');
+            try {
+                const q = query(collection(db, 'services'), orderBy('order'));
+                const snap = await getDocs(q);
+                currentServices = [];
+                snap.forEach(d => currentServices.push({ id: d.id, ...d.data() }));
+
+                document.getElementById('badge-services').textContent = currentServices.length;
+                renderServices();
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load services.</p></div>`;
+            }
+        }
+
+        function renderServices() {
+            const list = document.getElementById('services-list');
+            if (currentServices.length === 0) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-briefcase"></i><p>No services entries yet.</p></div>`;
+                return;
+            }
+            list.innerHTML = currentServices.map(s => `
+            <div class="project-item">
+                <div class="project-thumb">
+                    <i class="${s.icon || 'fas fa-star'}"></i>
+                </div>
+                <div class="project-details">
+                    <h3>${s.title}</h3>
+                    <p>${s.description}</p>
+                </div>
+                <div class="project-actions">
+                    <button class="btn-icon edit" title="Edit" onclick="openEditService('${s.id}')"><i class="fas fa-edit"></i></button>
+                    <button class="btn-icon delete" title="Delete" onclick="deleteService('${s.id}', '${s.title.replace(/'/g, "\\'")}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            `).join('');
+        }
+
+        window.openServiceModal = function () {
+            editingServiceId = null;
+            currentServiceFeatures = [];
+            document.getElementById('modal-title-service').textContent = 'Add Service';
+            document.getElementById('modal-save-text-service').textContent = 'Add Service';
+            document.getElementById('srv-title-input').value = '';
+            document.getElementById('srv-desc-input').value = '';
+            document.getElementById('srv-icon-input').value = '';
+            document.getElementById('srv-order-input').value = currentServices.length + 1;
+            renderServiceFeatures();
+            document.getElementById('service-modal').classList.add('open');
+        };
+
+        window.openEditService = function (id) {
+            const s = currentServices.find(x => x.id === id);
+            if (!s) return;
+            editingServiceId = id;
+            currentServiceFeatures = [...(s.features || [])];
+            document.getElementById('modal-title-service').textContent = 'Edit Service';
+            document.getElementById('modal-save-text-service').textContent = 'Save Changes';
+            document.getElementById('srv-title-input').value = s.title || '';
+            document.getElementById('srv-desc-input').value = s.description || '';
+            document.getElementById('srv-icon-input').value = s.icon || '';
+            document.getElementById('srv-order-input').value = s.order || 1;
+            renderServiceFeatures();
+            document.getElementById('service-modal').classList.add('open');
+        };
+
+        window.closeServiceModal = function () {
+            document.getElementById('service-modal').classList.remove('open');
+        };
+
+        window.addServiceFeature = function () {
+            const input = document.getElementById('srv-feature-input');
+            const val = input.value.trim();
+            if (val && !currentServiceFeatures.includes(val)) {
+                currentServiceFeatures.push(val);
+                renderServiceFeatures();
+            }
+            input.value = '';
+            input.focus();
+        };
+
+        function renderServiceFeatures() {
+            document.getElementById('srv-features-preview').innerHTML = currentServiceFeatures.map((f, i) => `
+            <span class="tag-chip">${f} <span onclick="removeServiceFeature(${i})">✕</span></span>
+        `).join('');
+        }
+
+        window.removeServiceFeature = function (i) {
+            currentServiceFeatures.splice(i, 1);
+            renderServiceFeatures();
+        };
+
+        window.saveService = async function () {
+            const title = document.getElementById('srv-title-input').value.trim();
+            const desc = document.getElementById('srv-desc-input').value.trim();
+
+            if (!title || !desc) {
+                showToast('Title and description are required.', 'error');
+                return;
+            }
+
+            const data = {
+                title,
+                description: desc,
+                icon: document.getElementById('srv-icon-input').value.trim(),
+                features: currentServiceFeatures,
+                order: parseInt(document.getElementById('srv-order-input').value) || 1,
+            };
+
+            try {
+                if (editingServiceId) {
+                    await updateDoc(doc(db, 'services', editingServiceId), data);
+                    showToast('Service updated!', 'success');
+                } else {
+                    await addDoc(collection(db, 'services'), data);
+                    showToast('Service added!', 'success');
+                }
+                closeServiceModal();
+                loadServices();
+            } catch (err) {
+                showToast('Error saving service.', 'error');
+            }
+        };
+
+        window.deleteService = async function (id, title) {
+            if (!confirm(`Delete "${title}"?`)) return;
+            try {
+                await deleteDoc(doc(db, 'services', id));
+                showToast('Service deleted.', 'success');
+                loadServices();
+            } catch (e) {
+                showToast('Error deleting service.', 'error');
+            }
+        };
+
+        async function seedDefaultProfile() {
+            const data = {
+                name: 'Sahil Makwana',
+                title: 'Unity Game Developer',
+                subtitle: 'Unity Game Developer & Game Designer',
+                location: 'Surat, Gujarat, India',
+                heroDescription: "I'm a passionate and innovative game developer, recently graduated with a Bachelor of Computer Applications from Bhagwan Mahaveer University. My journey into game development began with a deep love for gaming.",
+                email: 'sammakwana212@gmail.com',
+                phone: '+91 91069 11788',
+                github: 'https://github.com/SamMakwana21',
+                linkedin: 'https://www.linkedin.com/in/sahil-makwana-123011376/',
+                instagram: 'https://www.instagram.com/its_sam_makwana_21',
+                imageUrl: 'assets/Profile3.jpg',
+                footerBio: 'Professional Unity Game Developer specializing in creating engaging and optimized gaming experiences for mobile platforms.'
+            };
+            await setDoc(doc(db, 'profile', 'main'), data);
+        }
+
         // ─── PROFILE ───
         async function loadProfile() {
             try {
                 const snap = await getDoc(doc(db, 'profile', 'main'));
-                if (snap.exists()) {
-                    const d = snap.data();
-                    document.getElementById('prof-name').value = d.name || '';
-                    document.getElementById('prof-title').value = d.title || '';
-                    document.getElementById('prof-subtitle').value = d.subtitle || '';
-                    document.getElementById('prof-location').value = d.location || '';
-                    document.getElementById('prof-hero-desc').value = d.heroDescription || '';
-                    document.getElementById('prof-email').value = d.email || '';
-                    document.getElementById('prof-phone').value = d.phone || '';
-                    document.getElementById('prof-github').value = d.github || '';
-                    document.getElementById('prof-linkedin').value = d.linkedin || '';
+                if (!snap.exists()) {
+                    await seedDefaultProfile();
+                    return loadProfile();
                 }
+                const d = snap.data();
+                document.getElementById('prof-name').value = d.name || '';
+                document.getElementById('prof-title').value = d.title || '';
+                document.getElementById('prof-subtitle').value = d.subtitle || '';
+                document.getElementById('prof-location').value = d.location || '';
+                document.getElementById('prof-hero-desc').value = d.heroDescription || '';
+                document.getElementById('prof-email').value = d.email || '';
+                document.getElementById('prof-phone').value = d.phone || '';
+                document.getElementById('prof-github').value = d.github || '';
+                document.getElementById('prof-linkedin').value = d.linkedin || '';
+                document.getElementById('prof-img').value = d.imageUrl || '';
+                document.getElementById('prof-instagram').value = d.instagram || '';
+                document.getElementById('prof-footer-bio').value = d.footerBio || '';
             } catch (e) { console.log('Profile load error:', e); }
         }
 
@@ -1404,6 +2168,9 @@
                 phone: document.getElementById('prof-phone').value.trim(),
                 github: document.getElementById('prof-github').value.trim(),
                 linkedin: document.getElementById('prof-linkedin').value.trim(),
+                imageUrl: document.getElementById('prof-img').value.trim(),
+                instagram: document.getElementById('prof-instagram').value.trim(),
+                footerBio: document.getElementById('prof-footer-bio').value.trim(),
             };
             try {
                 await setDoc(doc(db, 'profile', 'main'), data);

@@ -29,6 +29,70 @@
             }
         }
 
+        /* Skeleton Loader */
+        .skeleton {
+            background: linear-gradient(90deg, #1a1a2e 25%, #2a2a4a 50%, #1a1a2e 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skeleton-card {
+            height: 380px;
+            width: 100%;
+            border-radius: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .skeleton-img {
+            height: 200px;
+            width: 100%;
+        }
+
+        .skeleton-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .skeleton-title {
+            height: 24px;
+            width: 70%;
+            margin-bottom: 1rem;
+        }
+
+        .skeleton-text {
+            height: 14px;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .skeleton-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .skeleton-tag {
+            height: 20px;
+            width: 50px;
+            border-radius: 999px;
+        }
+
         @media screen and (max-width: 768px) {
             .nav-links {
                 position: fixed;
@@ -183,47 +247,10 @@
             <!-- <p class="section-description">Formal education that shaped my game development journey.</p> -->
         </div>
 
-        <div class="education-timeline">
-
-            <!-- HSC Entry -->
-            <div class="education-entry fade-in">
-                <div class="education-content reverse-layout">
-                    <div class="education-text">
-                        <h3>Higher Secondary School (HSC)</h3>
-                        <p class="education-institute">J.B. & Carp Impex Vidhya School</p>
-                        <div class="education-details">
-                            <!-- <p><b style="color: #5A72A0;">Passing Year</b> : March 2022</p> -->
-                            <span class="education-year">2021 – 2022</span>
-                            <p><b style="color: #5A72A0;">Board</b> : Gujarat Secondary and Higher Secondary Education
-                                Board</p>
-                            <p><b style="color: #5A72A0;">Location</b> : Surat, Gujarat, India</p>
-                        </div>
-                    </div>
-                    <div class="education-image">
-                        <img src="assets/hsc-school.jpg" alt="HSC School">
-                    </div>
-                </div>
+        <div class="education-timeline" id="dynamic-education-grid">
+            <div style="text-align:center;padding:48px;color:#94a3b8;font-size:14px;width:100%">
+                Loading education...
             </div>
-
-            <!-- BCA Entry -->
-            <div class="education-entry fade-in">
-                <div class="education-content reverse-layout">
-                    <div class="education-text">
-                        <h3>Bachelor of Computer Applications (BCA)</h3>
-                        <p class="education-institute">Bhagwan Mahaveer University, Surat</p>
-                        <div class="education-details">
-                            <!-- <p><b style="color: #5A72A0;">Passing Year</b> : June 2025</p> -->
-                            <span class="education-year">2022 – 2025</span>
-                            <p><b style="color: #5A72A0;">University</b> : Bhagwan Mahaveer University</p>
-                            <p><b style="color: #5A72A0;">Location</b> : Surat, Gujarat, India</p>
-                        </div>
-                    </div>
-                    <div class="education-image">
-                        <img src="assets/bca-college.jpg" alt="BCA College">
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
@@ -233,71 +260,9 @@
             <span class="section-subtitle">My Skills</span>
             <h2>Technical Skills</h2>
         </div>
-        <div class="skills-container">
-            <!-- Game Development Skills -->
-            <div class="skills-category">
-                <h3><span class="category-indicator"></span>Game Development</h3>
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <i class="bi bi-unity skill-icon"></i>
-                        <span class="skill-name">Unity</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="bi bi-code-slash skill-icon"></i>
-                        <span class="skill-name">C++</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="bi bi-code-slash skill-icon"></i>
-                        <span class="skill-name">C#</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="bi bi-controller skill-icon"></i>
-                        <span class="skill-name">Game Design</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="bi bi-box skill-icon"></i>
-                        <span class="skill-name">3D Modeling</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="bi bi-people skill-icon"></i>
-                        <span class="skill-name">Multiplayer</span>
-                    </div>
-                    <!-- <div class="skill-card">
-                        <i class="bi bi-phone skill-icon"></i>
-                        <span class="skill-name">Mobile Games</span>
-                    </div> -->
-                </div>
-            </div>
-
-            <!-- Other Skills -->
-            <div class="skills-category">
-                <h3><span class="category-indicator"></span>Other Skills</h3>
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <i class="bi bi-git skill-icon"></i>
-                        <span class="skill-name">GitHub</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="bi bi-google-play skill-icon"></i>
-                        <span class="skill-name">PlayConsole</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="bi bi-palette skill-icon"></i>
-                        <span class="skill-name">UI/UX Design</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="bi bi-hdd-network skill-icon"></i>
-                        <span class="skill-name">Photon/Mirror Networking</span>
-                    </div>
-                    <!-- <div class="skill-card">
-                        <i class="bi bi-hdd-network skill-icon"></i>
-                        <span class="skill-name">PhotoShop</span>
-                    </div> -->
-                    <div class="skill-card">
-                        <i class="bi bi-speedometer2 skill-icon"></i>
-                        <span class="skill-name">Game Performance Optimization</span>
-                    </div>
-                </div>
+        <div class="skills-container" id="dynamic-skills-container">
+            <div style="text-align:center;padding:48px;color:#94a3b8;font-size:14px;width:100%">
+                Loading skills...
             </div>
         </div>
     </section>
@@ -334,61 +299,9 @@
             <p class="section-description">Expert solutions tailored to your specific game development needs.</p>
         </div>
 
-        <div class="services-grid">
-            <div class="service-card fade-in" style="opacity: 0;">
-                <div class="service-icon">
-                    <i class="fas fa-gamepad"></i>
-                </div>
-                <h3>Mobile Game Development</h3>
-                <p>Building immersive and performance-optimized mobile games for Android and iOS platforms using Unity.
-                    Focused on responsive controls, fluid gameplay, and modern design aesthetics..</p>
-                <div class="service-features">
-                    <span><i class="fas fa-check"></i> Working With Android & iOS</span>
-                    <span><i class="fas fa-check"></i> Touch & Gesture Controls</span>
-                    <span><i class="fas fa-check"></i> Performance Optimization</span>
-                </div>
-            </div>
-
-            <div class="service-card fade-in" style="opacity: 0; transform: translateY(0px);">
-                <div class="service-icon">
-                    <i class="fas fa-code"></i>
-                </div>
-                <h3>Game Programming</h3>
-                <p>Structured and scalable code for 2D/3D games using Unity and C#. I specialize in building engaging
-                    gameplay systems, AI, and interaction logic tailored for different genres..</p>
-                <div class="service-features">
-                    <span><i class="fas fa-check"></i> Custom Game Controllers</span>
-                    <span><i class="fas fa-check"></i> Gameplay Logic Machanics</span>
-                    <span><i class="fas fa-check"></i> Smart AI & Behavior Trees</span>
-                </div>
-            </div>
-
-            <div class="service-card fade-in" style="opacity: 0; transform: translateY(0px);">
-                <div class="service-icon">
-                    <i class="fas fa-palette"></i>
-                </div>
-                <h3>UI/UX Design</h3>
-                <p>Creating player-friendly interfaces that feel natural and enhance gameplay experience. I design clean
-                    HUDs, menus, and visual feedback that guide the player intuitively.</p>
-                <div class="service-features">
-                    <span><i class="fas fa-check"></i> Minimal & Interactive Menus</span>
-                    <span><i class="fas fa-check"></i> Animation & Transitions</span>
-                    <span><i class="fas fa-check"></i> In-Game HUD & Popups</span>
-                </div>
-            </div>
-
-            <div class="service-card fade-in" style="opacity: 0;">
-                <div class="service-icon">
-                    <i class="fas fa-tools"></i>
-                </div>
-                <h3>Bug Fixing &amp; Optimization</h3>
-                <p>Enhancing performance through efficient memory use, reduced load times, and frame-rate smoothing.
-                    Also skilled in identifying and fixing logic, runtime, and build errors.</p>
-                <div class="service-features">
-                    <span><i class="fas fa-check"></i> Memory Management</span>
-                    <span><i class="fas fa-check"></i> FPS Improvement Techniques</span>
-                    <span><i class="fas fa-check"></i> Crash & Error Resolution</span>
-                </div>
+        <div class="services-grid" id="dynamic-services-grid">
+            <div style="grid-column:1/-1;text-align:center;padding:48px;color:#94a3b8;font-size:14px;">
+                Loading services...
             </div>
         </div>
 
@@ -508,97 +421,472 @@
     <script type="module">
         import { db } from './firebase-config.js';
         import {
-            collection, getDocs, doc, getDoc, addDoc,
+            collection, getDocs, doc, getDoc, addDoc, setDoc,
             query, orderBy, serverTimestamp
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // ── Seed default projects (runs once if Firestore is empty) ──
+        const BASE = 'https://sammakwana21.github.io/Portfolio/assets/';
+        const DEFAULT_PROJECTS = [
+            {
+                order: 1,
+                title: 'Save The Dog',
+                description: 'A fun physics-based puzzle where you draw a shield to protect the dog from a swarm of angry bees! Test your timing, logic, and quick thinking as each level introduces new challenges and traps. Perfect for hyper-casual players who love clever mechanics with a simple twist.',
+                imageUrl: BASE + 'SaveTheDog.jpg',
+                link: '',
+                tags: ['Unity', 'C#', '2D', 'Puzzle', 'Logic Game', 'SaveTheDog']
+            },
+            {
+                order: 2,
+                title: 'Solitaire Offline Card Game',
+                description: 'Players begin with a shuffled deck and aim to stack cards in ascending order by suit — just like classic solitaire. Featuring intuitive drag-and-drop controls, undo options, and unlimited reshuffling, the game delivers a smooth, relaxing experience for both casual players and card game lovers. Built for offline play.',
+                imageUrl: BASE + 'SolitaireOffline.jpg',
+                link: 'https://drive.google.com/file/d/1togNlk8qDZTKhkn0SsS3zfJ4_PZfRd9F/view?usp=sharing',
+                tags: ['Unity', 'C#', '2D', 'Card Game', 'Classic', 'Solitaire', 'Offline Game']
+            },
+            {
+                order: 3,
+                title: 'Find Difference & Solve The Puzzle',
+                description: 'Sharpen your eyes and spot the smallest visual changes across 300+ unique levels! Find hidden differences, solve visual brain teasers, and beat the clock. Integrated with hints, zoom, and leaderboards for a complete puzzle-solving experience.',
+                imageUrl: BASE + 'FindDifferences.png',
+                link: 'https://drive.google.com/file/d/1jybXEoeW1dRu5K7HR0NQAyaVauwosCUW/view?usp=sharing',
+                tags: ['Unity', 'C#', '2D', 'Puzzle', 'Find The Differences', 'Brain Teaser']
+            },
+            {
+                order: 4,
+                title: 'Short The Ball - Puzzle Game',
+                description: 'A fun and addictive color-sorting puzzle game where you organize balls into tubes based on color. Test your logic and strategy skills with hundreds of levels that increase in difficulty. Easy to play, challenging to master!',
+                imageUrl: BASE + 'ShortTheBall.jpg',
+                link: '',
+                tags: ['Unity', 'C#', '3D', 'Puzzle', 'Logic', 'Shorting Game']
+            },
+            {
+                order: 5,
+                title: 'Castle Dodge: Survival Run',
+                description: 'A fast-paced 2D mobile survival arcade game where players dodge falling rocks and missiles while collecting coins to survive as long as possible. Featuring a heart-based health system, score tracking, particle effects, and ad-integrated gameplay, set in a vibrant fantasy castle environment.',
+                imageUrl: BASE + 'CastleDodgeSurvivalRun.jpg',
+                link: 'https://drive.google.com/file/d/1ldkRodQzmNptY88l3iSKajYypS_xcbZ9/view?usp=sharing',
+                tags: ['Unity', 'C#', '2D', 'Survival', 'Castle Dodge', 'Run Game', 'Ad Integrated']
+            },
+            {
+                order: 6,
+                title: 'Yasuke vs Oda – Samurai Combat Arena',
+                description: 'A 3D mobile combat fighting game inspired by Feudal Japan, featuring an intense one-on-one battle between Yasuke and Oda. Players use Punch, Kick, Heavy Attack, Pushback, Block, Roll, Jump, Run, and combo attacks, enhanced with particle effects, hit flashes, and damage feedback. A complete round-based system with health and stamina bars.',
+                imageUrl: BASE + 'CombatGame.jpg',
+                link: 'https://drive.google.com/file/d/1QGJEkgJVDPUPQEzR0yyPT3J44hD264BV/view?usp=sharing',
+                tags: ['Unity', 'C#', 'Unity 3D', 'Combat', 'Samurai Game', 'Action RPG', 'Melee Fighting']
+            }
+        ];
+
+        async function seedDefaultProjects() {
+            for (const p of DEFAULT_PROJECTS) {
+                await addDoc(collection(db, 'projects'), p);
+            }
+        }
 
         // ── Load projects from Firestore ──────────────────────────
         async function loadProjects() {
             const grid = document.getElementById('dynamic-projects-grid');
+
+            // 1. Show cached projects immediately if available
+            const cached = localStorage.getItem('portfolio_projects');
+            if (cached) {
+                renderProjects(JSON.parse(cached));
+            } else {
+                // Show skeletons if no cache
+                grid.innerHTML = Array(3).fill(0).map(() => `
+                    <div class="skeleton-card">
+                        <div class="skeleton-img skeleton"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton-title skeleton"></div>
+                            <div class="skeleton-text skeleton"></div>
+                            <div class="skeleton-text skeleton" style="width:90%"></div>
+                            <div class="skeleton-tags">
+                                <div class="skeleton-tag skeleton"></div>
+                                <div class="skeleton-tag skeleton"></div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
             try {
                 const q = query(collection(db, 'projects'), orderBy('order'));
                 const snap = await getDocs(q);
 
                 if (snap.empty) {
-                    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px;color:#94a3b8;font-size:14px;">No projects yet. Check back soon! 🚀</div>`;
-                    return;
+                    // First run — seed default projects then reload
+                    await seedDefaultProjects();
+                    return loadProjects();
                 }
 
-                grid.innerHTML = '';
-                snap.forEach(d => {
-                    const p = d.data();
-                    const tags = (p.tags || []).map(t => `<span>${t}</span>`).join('');
-                    const link = p.link || '#';
-                    grid.innerHTML += `
-                        <a href="${link}" target="_blank" class="project-link">
-                            <div class="project-card fade-in" style="opacity:0;">
-                                <div class="project-image">
-                                    ${p.imageUrl
-                            ? `<img src="${p.imageUrl}" alt="${p.title}" loading="lazy">`
-                            : `<div style="display:flex;align-items:center;justify-content:center;height:200px;font-size:48px;">🎮</div>`
-                        }
-                                </div>
-                                <div class="project-info">
-                                    <h3>${p.title}</h3>
-                                    <p>${p.description}</p>
-                                    <div class="project-tags">${tags}</div>
-                                </div>
-                            </div>
-                        </a>`;
-                });
+                const projects = [];
+                snap.forEach(d => projects.push(d.data()));
 
-                // Re-trigger fade observer on newly created cards
-                document.querySelectorAll('.project-card').forEach(el => {
-                    el.style.opacity = '0';
-                    if (window._fadeObserver) window._fadeObserver.observe(el);
-                });
+                // 2. Cache the fetched projects
+                localStorage.setItem('portfolio_projects', JSON.stringify(projects));
+
+                // 3. Render fresh data
+                renderProjects(projects);
 
             } catch (e) {
                 console.warn('Firebase projects load failed:', e);
-                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px;color:#94a3b8;">Could not load projects. Please check Firebase config.</div>`;
+                if (!cached) {
+                    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px;color:#94a3b8;">Could not load projects. Please check Firebase config.</div>`;
+                }
             }
+        }
+
+        function renderProjects(projects) {
+            const grid = document.getElementById('dynamic-projects-grid');
+            grid.innerHTML = '';
+            projects.forEach(p => {
+                const tags = (p.tags || []).map(t => `<span>${t}</span>`).join('');
+                const link = p.link || '#';
+                grid.innerHTML += `
+                    <a href="${link}" target="_blank" class="project-link">
+                        <div class="project-card fade-in" style="opacity:0;">
+                            <div class="project-image">
+                                ${p.imageUrl
+                        ? `<img src="${p.imageUrl}" alt="${p.title}" loading="lazy">`
+                        : `<div style="display:flex;align-items:center;justify-content:center;height:200px;font-size:48px;">🎮</div>`
+                    }
+                            </div>
+                            <div class="project-info">
+                                <h3>${p.title}</h3>
+                                <p>${p.description}</p>
+                                <div class="project-tags">${tags}</div>
+                            </div>
+                        </div>
+                    </a>`;
+            });
+
+            // Re-trigger fade observer on newly created cards
+            document.querySelectorAll('.project-card').forEach(el => {
+                el.style.opacity = '0';
+                if (window._fadeObserver) window._fadeObserver.observe(el);
+            });
+        }
+
+        async function seedDefaultProfile() {
+            const data = {
+                name: 'Sahil Makwana',
+                title: 'Unity Game Developer',
+                subtitle: 'Unity Game Developer & Game Designer',
+                location: 'Surat, Gujarat, India',
+                heroDescription: "I'm a passionate and innovative game developer, recently graduated with a Bachelor of Computer Applications from Bhagwan Mahaveer University. My journey into game development began with a deep love for gaming.",
+                email: 'sammakwana212@gmail.com',
+                phone: '+91 91069 11788',
+                github: 'https://github.com/SamMakwana21',
+                linkedin: 'https://www.linkedin.com/in/sahil-makwana-123011376/',
+                instagram: 'https://www.instagram.com/its_sam_makwana_21',
+                imageUrl: 'assets/Profile3.jpg',
+                footerBio: 'Professional Unity Game Developer specializing in creating engaging and optimized gaming experiences for mobile platforms.'
+            };
+            await setDoc(doc(db, 'profile', 'main'), data);
+            return data;
         }
 
         // ── Load profile from Firestore ───────────────────────────
         async function loadProfile() {
+            // Show cached profile immediately
+            const cached = localStorage.getItem('portfolio_profile');
+            if (cached) {
+                updateProfileUI(JSON.parse(cached));
+            }
+
             try {
                 const snap = await getDoc(doc(db, 'profile', 'main'));
-                if (!snap.exists()) return;
-                const d = snap.data();
-                if (d.name) {
-                    document.querySelectorAll('.logo, .hero h1, .animate-text, .footer-info h3').forEach(el => {
-                        if (el.textContent.toLowerCase().includes('sahil') ||
-                            el.textContent.toLowerCase().includes('sam')) {
-                            el.textContent = d.name;
-                        }
-                    });
+                let d;
+                if (!snap.exists()) {
+                    // Seed defaults if profile is missing
+                    d = await seedDefaultProfile();
+                } else {
+                    d = snap.data();
                 }
-                if (d.subtitle) {
-                    const h2 = document.querySelector('.animate-text-delay');
-                    if (h2) h2.textContent = d.subtitle;
-                }
-                if (d.heroDescription) {
-                    const desc = document.querySelector('.hero-description');
-                    if (desc) desc.textContent = d.heroDescription;
-                }
-                if (d.email) {
-                    document.querySelectorAll('.contact-item p, .footer-contact-info p').forEach(el => {
-                        if (el.textContent.includes('@')) el.textContent = d.email;
-                    });
-                }
-                if (d.phone) {
-                    document.querySelectorAll('.contact-item p, .footer-contact-info p').forEach(el => {
-                        if (el.textContent.includes('+91') || el.textContent.includes('91069')) el.textContent = d.phone;
-                    });
-                }
-                if (d.location) {
-                    document.querySelectorAll('.contact-item p, .footer-contact-info p').forEach(el => {
-                        if (el.textContent.includes('Surat') || el.textContent.includes('Gujarat')) el.textContent = d.location;
-                    });
-                }
+
+                // Cache the fetched profile
+                localStorage.setItem('portfolio_profile', JSON.stringify(d));
+
+                // Update UI with fresh data
+                updateProfileUI(d);
             } catch (e) {
                 console.warn('Firebase profile load failed:', e);
             }
+        }
+
+        function updateProfileUI(d) {
+            if (d.name) {
+                document.querySelectorAll('.logo, .hero h1, .animate-text, .footer-info h3').forEach(el => {
+                    if (el.textContent.toLowerCase().includes('sahil') ||
+                        el.textContent.toLowerCase().includes('sam')) {
+                        el.textContent = d.name;
+                    }
+                });
+            }
+            if (d.subtitle) {
+                const h2 = document.querySelector('.animate-text-delay');
+                if (h2) h2.textContent = d.subtitle;
+            }
+            if (d.heroDescription) {
+                const desc = document.querySelector('.hero-description');
+                if (desc) desc.textContent = d.heroDescription;
+            }
+            if (d.email) {
+                document.querySelectorAll('.contact-item p, .footer-contact-info p').forEach(el => {
+                    if (el.textContent.includes('@')) el.textContent = d.email;
+                });
+            }
+            if (d.phone) {
+                document.querySelectorAll('.contact-item p, .footer-contact-info p').forEach(el => {
+                    if (el.textContent.includes('+91') || el.textContent.includes('91069')) el.textContent = d.phone;
+                });
+            }
+            if (d.location) {
+                document.querySelectorAll('.contact-item p, .footer-contact-info p').forEach(el => {
+                    if (el.textContent.includes('Surat') || el.textContent.includes('Gujarat')) el.textContent = d.location;
+                });
+            }
+            if (d.imageUrl) {
+                const img = document.querySelector('.profile-circle img');
+                if (img) img.src = d.imageUrl;
+            }
+            if (d.github) {
+                const link = document.querySelector('a[aria-label="GitHub"]');
+                if (link) link.href = d.github;
+            }
+            if (d.linkedin) {
+                const link = document.querySelector('a[aria-label="LinkedIn"]');
+                if (link) link.href = d.linkedin;
+            }
+            if (d.instagram) {
+                const link = document.querySelector('a[aria-label="Instagram"]');
+                if (link) link.href = d.instagram;
+            }
+            if (d.footerBio) {
+                const p = document.querySelector('.footer-info p');
+                if (p) p.textContent = d.footerBio;
+            }
+        }
+
+        // ── Seed default education, skills, services ──
+        const DEFAULT_EDUCATION = [
+            {
+                order: 1,
+                degree: 'Bachelor of Computer Applications (BCA)',
+                institute: 'Bhagwan Mahaveer University, Surat',
+                year: '2022 – 2025',
+                boardOrUniv: 'Bhagwan Mahaveer University',
+                location: 'Surat, Gujarat, India',
+                imageUrl: 'assets/bca-college.jpg'
+            },
+            {
+                order: 2,
+                degree: 'Higher Secondary School (HSC)',
+                institute: 'J.B. & Carp Impex Vidhya School',
+                year: '2021 – 2022',
+                boardOrUniv: 'Gujarat Secondary and Higher Secondary Education Board',
+                location: 'Surat, Gujarat, India',
+                imageUrl: 'assets/hsc-school.jpg'
+            }
+        ];
+
+        const DEFAULT_SKILLS = [
+            { order: 1, category: 'Game Development', name: 'Unity', icon: 'bi-unity' },
+            { order: 2, category: 'Game Development', name: 'C++', icon: 'bi-code-slash' },
+            { order: 3, category: 'Game Development', name: 'C#', icon: 'bi-code-slash' },
+            { order: 4, category: 'Game Development', name: 'Game Design', icon: 'bi-controller' },
+            { order: 5, category: 'Game Development', name: '3D Modeling', icon: 'bi-box' },
+            { order: 6, category: 'Game Development', name: 'Multiplayer', icon: 'bi-people' },
+            { order: 7, category: 'Other Skills', name: 'GitHub', icon: 'bi-git' },
+            { order: 8, category: 'Other Skills', name: 'PlayConsole', icon: 'bi-google-play' },
+            { order: 9, category: 'Other Skills', name: 'UI/UX Design', icon: 'bi-palette' },
+            { order: 10, category: 'Other Skills', name: 'Photon/Mirror Networking', icon: 'bi-hdd-network' },
+            { order: 11, category: 'Other Skills', name: 'Game Performance Optimization', icon: 'bi-speedometer2' }
+        ];
+
+        const DEFAULT_SERVICES = [
+            {
+                order: 1,
+                title: 'Mobile Game Development',
+                description: 'Building immersive and performance-optimized mobile games for Android and iOS platforms using Unity. Focused on responsive controls, fluid gameplay, and modern design aesthetics..',
+                icon: 'fas fa-gamepad',
+                features: ['Working With Android & iOS', 'Touch & Gesture Controls', 'Performance Optimization']
+            },
+            {
+                order: 2,
+                title: 'Game Programming',
+                description: 'Structured and scalable code for 2D/3D games using Unity and C#. I specialize in building engaging gameplay systems, AI, and interaction logic tailored for different genres..',
+                icon: 'fas fa-code',
+                features: ['Custom Game Controllers', 'Gameplay Logic Machanics', 'Smart AI & Behavior Trees']
+            },
+            {
+                order: 3,
+                title: 'UI/UX Design',
+                description: 'Creating player-friendly interfaces that feel natural and enhance gameplay experience. I design clean HUDs, menus, and visual feedback that guide the player intuitively.',
+                icon: 'fas fa-palette',
+                features: ['Minimal & Interactive Menus', 'Animation & Transitions', 'In-Game HUD & Popups']
+            },
+            {
+                order: 4,
+                title: 'Bug Fixing & Optimization',
+                description: 'Enhancing performance through efficient memory use, reduced load times, and frame-rate smoothing. Also skilled in identifying and fixing logic, runtime, and build errors.',
+                icon: 'fas fa-tools',
+                features: ['Memory Management', 'FPS Improvement Techniques', 'Crash & Error Resolution']
+            }
+        ];
+
+        async function seedCollection(collectionName, items) {
+            for (const item of items) {
+                await addDoc(collection(db, collectionName), item);
+            }
+        }
+
+        // ── Load Education ──
+        async function loadEducation() {
+            const grid = document.getElementById('dynamic-education-grid');
+            const cached = localStorage.getItem('portfolio_education');
+            if (cached) renderEducation(JSON.parse(cached));
+
+            try {
+                const q = query(collection(db, 'education'), orderBy('order'));
+                const snap = await getDocs(q);
+                if (snap.empty) {
+                    await seedCollection('education', DEFAULT_EDUCATION);
+                    return loadEducation();
+                }
+                const items = [];
+                snap.forEach(d => items.push(d.data()));
+                localStorage.setItem('portfolio_education', JSON.stringify(items));
+                renderEducation(items);
+            } catch (e) {
+                console.warn('Firebase education load failed:', e);
+            }
+        }
+
+        function renderEducation(items) {
+            const grid = document.getElementById('dynamic-education-grid');
+            grid.innerHTML = items.map(item => `
+            <div class="education-entry fade-in" style="opacity:0;">
+                <div class="education-content reverse-layout">
+                    <div class="education-text">
+                        <h3>${item.degree}</h3>
+                        <p class="education-institute">${item.institute}</p>
+                        <div class="education-details">
+                            <span class="education-year">${item.year}</span>
+                            <p><b style="color: #5A72A0;">Board/University</b> : ${item.boardOrUniv}</p>
+                            <p><b style="color: #5A72A0;">Location</b> : ${item.location}</p>
+                        </div>
+                    </div>
+                    <div class="education-image">
+                        <img src="${item.imageUrl || ''}" alt="${item.degree}">
+                    </div>
+                </div>
+            </div>`).join('');
+
+            document.querySelectorAll('.education-entry').forEach(el => {
+                el.style.opacity = '0';
+                if (window._fadeObserver) window._fadeObserver.observe(el);
+            });
+        }
+
+        // ── Load Skills ──
+        async function loadSkills() {
+            const grid = document.getElementById('dynamic-skills-container');
+            const cached = localStorage.getItem('portfolio_skills');
+            if (cached) renderSkills(JSON.parse(cached));
+
+            try {
+                const q = query(collection(db, 'skills'), orderBy('order'));
+                const snap = await getDocs(q);
+                if (snap.empty) {
+                    await seedCollection('skills', DEFAULT_SKILLS);
+                    return loadSkills();
+                }
+                const items = [];
+                snap.forEach(d => items.push(d.data()));
+                localStorage.setItem('portfolio_skills', JSON.stringify(items));
+                renderSkills(items);
+            } catch (e) {
+                console.warn('Firebase skills load failed:', e);
+            }
+        }
+
+        function renderSkills(items) {
+            const container = document.getElementById('dynamic-skills-container');
+
+            // Group by category
+            const categories = {};
+            items.forEach(item => {
+                const cat = item.category || 'Other Skills';
+                if (!categories[cat]) categories[cat] = [];
+                categories[cat].push(item);
+            });
+
+            container.innerHTML = Object.keys(categories).map(cat => `
+            <div class="skills-category">
+                <h3><span class="category-indicator"></span>${cat}</h3>
+                <div class="skills-grid">
+                    ${categories[cat].map(skill => `
+                    <div class="skill-card">
+                        <i class="bi ${skill.icon || 'bi-star'} skill-icon"></i>
+                        <span class="skill-name">${skill.name}</span>
+                    </div>`).join('')}
+                </div>
+            </div>`).join('');
+        }
+
+        // ── Load Services ──
+        async function loadServices() {
+            const grid = document.getElementById('dynamic-services-grid');
+            const cached = localStorage.getItem('portfolio_services');
+            if (cached) renderServices(JSON.parse(cached));
+
+            try {
+                const q = query(collection(db, 'services'), orderBy('order'));
+                const snap = await getDocs(q);
+                if (snap.empty) {
+                    await seedCollection('services', DEFAULT_SERVICES);
+                    return loadServices();
+                }
+                const items = [];
+                snap.forEach(d => items.push(d.data()));
+                localStorage.setItem('portfolio_services', JSON.stringify(items));
+                renderServices(items);
+            } catch (e) {
+                console.warn('Firebase services load failed:', e);
+            }
+        }
+
+        function renderServices(items) {
+            const grid = document.getElementById('dynamic-services-grid');
+            grid.innerHTML = items.map(item => `
+            <div class="service-card fade-in" style="opacity:0;">
+                <div class="service-icon">
+                    <i class="${item.icon || 'fas fa-star'}"></i>
+                </div>
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+                <div class="service-features">
+                    ${(item.features || []).map(f => `<span><i class="fas fa-check"></i> ${f}</span>`).join('')}
+                </div>
+            </div>`).join('');
+
+            document.querySelectorAll('.service-card').forEach(el => {
+                el.style.opacity = '0';
+                if (window._fadeObserver) window._fadeObserver.observe(el);
+            });
+
+            // Reapply hover effect listeners
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-10px)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                });
+            });
         }
 
         // ── Custom Toast (replaces browser alert) ─────────────────
@@ -686,6 +974,9 @@
         // ── Initialize (module is deferred — DOM is always ready) ──
         loadProjects();
         loadProfile();
+        loadEducation();
+        loadSkills();
+        loadServices();
         setupContactForm();
     </script>
 
