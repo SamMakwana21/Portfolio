@@ -604,17 +604,26 @@
         // ── Save contact form to Firestore ────────────────────────
         function setupContactForm() {
             const form = document.querySelector('.contact-form');
-            if (!form) return;
+            if (!form || form.dataset.fbReady) return; // prevent double-bind
+            form.dataset.fbReady = '1';
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const name = form.querySelector('#name')?.value.trim();
-                const email = form.querySelector('#email')?.value.trim();
-                const subject = form.querySelector('#subject')?.value.trim();
-                const message = form.querySelector('#message')?.value.trim();
+
+                // Use document-level selectors (correct)
+                const name = document.getElementById('name')?.value.trim();
+                const email = document.getElementById('email')?.value.trim();
+                const subject = document.getElementById('subject')?.value.trim();
+                const message = document.getElementById('message')?.value.trim();
 
                 if (!name || !email || !message) {
                     alert('Please fill in all fields');
+                    return;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Please enter a valid email address');
                     return;
                 }
 
@@ -625,36 +634,30 @@
 
                 try {
                     await addDoc(collection(db, 'contacts'), {
-                        name, email, subject: subject || '', message,
+                        name, email,
+                        subject: subject || '',
+                        message,
                         timestamp: serverTimestamp(),
                         read: false
                     });
-                    alert('Message sent successfully! I\'ll get back to you soon. 😊');
+                    alert("Message sent successfully! I'll get back to you soon. 😊");
                     form.reset();
                 } catch (err) {
                     console.error('Firestore save failed:', err);
-                    alert('Message sent! (Note: Could not save to database — check Firebase config)');
+                    alert('Failed to send. Please try again later.');
                 } finally {
                     submitBtn.textContent = original;
                     submitBtn.disabled = false;
                 }
-            }, { once: false });
+            });
         }
 
-        // ── Initialize ────────────────────────────────────────────
-        document.addEventListener('DOMContentLoaded', () => {
-            loadProjects();
-            loadProfile();
-            setupContactForm();
-        });
-
-        // If DOMContentLoaded already fired
-        if (document.readyState !== 'loading') {
-            loadProjects();
-            loadProfile();
-            setupContactForm();
-        }
+        // ── Initialize (module is deferred — DOM is always ready) ──
+        loadProjects();
+        loadProfile();
+        setupContactForm();
     </script>
+
 
 
 </body>

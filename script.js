@@ -110,49 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Form handling
-    const contactForm = document.querySelector('.contact-form');
-    
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Basic form validation
-        const name = contactForm.querySelector('input[name="name"]').value;
-        const email = contactForm.querySelector('input[name="email"]').value;
-        const message = contactForm.querySelector('textarea[name="message"]').value;
-        
-        if (!name || !email || !message) {
-            alert('Please fill in all fields');
-            return;
-        }
-        
-        if (!isValidEmail(email)) {
-            alert('Please enter a valid email address');
-            return;
-        }
-        
-        // Here you would typically send the form data to your server
-        // For now, we'll just show a success message
-        const submitBtn = contactForm.querySelector('.submit-btn');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-        
-        try {
-            // Simulate sending (replace with actual API call)
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            alert('Message sent successfully!');
-            contactForm.reset();
-        } catch (error) {
-            alert('Failed to send message. Please try again.');
-        } finally {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }
-    });
 
     // Project card hover effect
+
     projectCards = document.querySelectorAll('.project-card'); // Update query to get latest elements
     
     projectCards.forEach(card => {
