@@ -1504,14 +1504,14 @@
             document.addEventListener(evt, resetInactivityTimer, { passive: true });
         });
 
-        // Track tab visibility — pause timer when tab hidden
+        // Track tab visibility — reset timer when user returns to tab
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                clearTimeout(inactivityTimer);
-                clearTimeout(warnTimer);
-            } else if (isLoggedIn) {
+            if (!document.hidden && isLoggedIn) {
+                // User came back to admin tab — reset the 2 min timer
                 resetInactivityTimer();
             }
+            // When tab goes to background: timer keeps running!
+            // If 2 min pass without returning, logout will fire automatically.
         });
 
         // ─── Auth State ───
@@ -1752,16 +1752,52 @@
         };
 
         // ─── EDUCATION ───
+        const SEED_EDUCATION = [
+            { order: 1, degree: 'Bachelor of Computer Applications (BCA)', institute: 'Bhagwan Mahaveer University, Surat', year: '2022 – 2025', boardOrUniv: 'Bhagwan Mahaveer University', location: 'Surat, Gujarat, India', imageUrl: 'assets/bca-college.jpg' },
+            { order: 2, degree: 'Higher Secondary School (HSC)', institute: 'J.B. & Carp Impex Vidhya School', year: '2021 – 2022', boardOrUniv: 'Gujarat Secondary and Higher Secondary Education Board', location: 'Surat, Gujarat, India', imageUrl: 'assets/hsc-school.jpg' }
+        ];
+        const SEED_SKILLS = [
+            { order: 1, category: 'Game Development', name: 'Unity', icon: 'bi-unity' },
+            { order: 2, category: 'Game Development', name: 'C++', icon: 'bi-code-slash' },
+            { order: 3, category: 'Game Development', name: 'C#', icon: 'bi-code-slash' },
+            { order: 4, category: 'Game Development', name: 'Game Design', icon: 'bi-controller' },
+            { order: 5, category: 'Game Development', name: '3D Modeling', icon: 'bi-box' },
+            { order: 6, category: 'Game Development', name: 'Multiplayer', icon: 'bi-people' },
+            { order: 7, category: 'Other Skills', name: 'GitHub', icon: 'bi-git' },
+            { order: 8, category: 'Other Skills', name: 'PlayConsole', icon: 'bi-google-play' },
+            { order: 9, category: 'Other Skills', name: 'UI/UX Design', icon: 'bi-palette' },
+            { order: 10, category: 'Other Skills', name: 'Photon/Mirror Networking', icon: 'bi-hdd-network' },
+            { order: 11, category: 'Other Skills', name: 'Game Performance Optimization', icon: 'bi-speedometer2' }
+        ];
+        const SEED_SERVICES = [
+            { order: 1, title: 'Mobile Game Development', description: 'Building immersive and performance-optimized mobile games for Android and iOS platforms using Unity. Focused on responsive controls, fluid gameplay, and modern design aesthetics..', icon: 'fas fa-gamepad', features: ['Working With Android & iOS', 'Touch & Gesture Controls', 'Performance Optimization'] },
+            { order: 2, title: 'Game Programming', description: 'Structured and scalable code for 2D/3D games using Unity and C#. I specialize in building engaging gameplay systems, AI, and interaction logic tailored for different genres..', icon: 'fas fa-code', features: ['Custom Game Controllers', 'Gameplay Logic Machanics', 'Smart AI & Behavior Trees'] },
+            { order: 3, title: 'UI/UX Design', description: 'Creating player-friendly interfaces that feel natural and enhance gameplay experience. I design clean HUDs, menus, and visual feedback that guide the player intuitively.', icon: 'fas fa-palette', features: ['Minimal & Interactive Menus', 'Animation & Transitions', 'In-Game HUD & Popups'] },
+            { order: 4, title: 'Bug Fixing & Optimization', description: 'Enhancing performance through efficient memory use, reduced load times, and frame-rate smoothing. Also skilled in identifying and fixing logic, runtime, and build errors.', icon: 'fas fa-tools', features: ['Memory Management', 'FPS Improvement Techniques', 'Crash & Error Resolution'] }
+        ];
+
+        async function seedIfEmpty(collectionName, seedData) {
+            const snap = await getDocs(query(collection(db, collectionName), orderBy('order')));
+            if (snap.empty) {
+                for (const item of seedData) {
+                    await addDoc(collection(db, collectionName), item);
+                }
+                return true; // was seeded
+            }
+            return false;
+        }
+
         async function loadEducation() {
             const list = document.getElementById('education-list');
             try {
+                const seeded = await seedIfEmpty('education', SEED_EDUCATION);
                 const q = query(collection(db, 'education'), orderBy('order'));
                 const snap = await getDocs(q);
                 currentEducation = [];
                 snap.forEach(d => currentEducation.push({ id: d.id, ...d.data() }));
-
                 document.getElementById('badge-education').textContent = currentEducation.length;
                 renderEducation();
+                if (seeded) showToast('Education data seeded to Firebase! 🎉', 'success');
             } catch (e) {
                 list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load education.</p></div>`;
             }
@@ -1874,13 +1910,14 @@
         async function loadSkills() {
             const list = document.getElementById('skills-list');
             try {
+                const seeded = await seedIfEmpty('skills', SEED_SKILLS);
                 const q = query(collection(db, 'skills'), orderBy('order'));
                 const snap = await getDocs(q);
                 currentSkills = [];
                 snap.forEach(d => currentSkills.push({ id: d.id, ...d.data() }));
-
                 document.getElementById('badge-skills').textContent = currentSkills.length;
                 renderSkills();
+                if (seeded) showToast('Skills data seeded to Firebase! 🎉', 'success');
             } catch (e) {
                 list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load skills.</p></div>`;
             }
@@ -1983,13 +2020,14 @@
         async function loadServices() {
             const list = document.getElementById('services-list');
             try {
+                const seeded = await seedIfEmpty('services', SEED_SERVICES);
                 const q = query(collection(db, 'services'), orderBy('order'));
                 const snap = await getDocs(q);
                 currentServices = [];
                 snap.forEach(d => currentServices.push({ id: d.id, ...d.data() }));
-
                 document.getElementById('badge-services').textContent = currentServices.length;
                 renderServices();
+                if (seeded) showToast('Services data seeded to Firebase! 🎉', 'success');
             } catch (e) {
                 list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load services.</p></div>`;
             }
