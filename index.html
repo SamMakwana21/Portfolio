@@ -601,35 +601,66 @@
             }
         }
 
+        // ── Custom Toast (replaces browser alert) ─────────────────
+        function showToast(msg, type) {
+            const old = document.getElementById('_fb_toast');
+            if (old) old.remove();
+            const toast = document.createElement('div');
+            toast.id = '_fb_toast';
+            const ok = type !== 'error';
+            toast.innerHTML = (ok ? '✅' : '❌') + ' &nbsp;' + msg;
+            Object.assign(toast.style, {
+                position: 'fixed', bottom: '30px', left: '50%',
+                transform: 'translateX(-50%) translateY(30px)',
+                background: ok ? 'linear-gradient(135deg,#0a1f14,#0d2233)' : 'linear-gradient(135deg,#1f0a0a,#1a0d0d)',
+                color: ok ? '#6ee7b7' : '#fca5a5',
+                padding: '14px 32px', borderRadius: '50px',
+                border: '1px solid ' + (ok ? '#10b98155' : '#ef444455'),
+                fontFamily: 'Inter,sans-serif', fontSize: '14px', fontWeight: '600',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.45)', zIndex: '999999',
+                opacity: '0', transition: 'all 0.35s cubic-bezier(.4,0,.2,1)',
+                pointerEvents: 'none', letterSpacing: '0.4px', whiteSpace: 'nowrap',
+            });
+            document.body.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            });
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(30px)';
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
+        }
+
         // ── Save contact form to Firestore ────────────────────────
         function setupContactForm() {
             const form = document.querySelector('.contact-form');
-            if (!form || form.dataset.fbReady) return; // prevent double-bind
+            if (!form || form.dataset.fbReady) return;
             form.dataset.fbReady = '1';
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                // Use document-level selectors (correct)
                 const name = document.getElementById('name')?.value.trim();
                 const email = document.getElementById('email')?.value.trim();
                 const subject = document.getElementById('subject')?.value.trim();
                 const message = document.getElementById('message')?.value.trim();
 
                 if (!name || !email || !message) {
-                    alert('Please fill in all fields');
+                    showToast('Please fill in all fields', 'error');
                     return;
                 }
 
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
-                    alert('Please enter a valid email address');
+                    showToast('Please enter a valid email address', 'error');
                     return;
                 }
 
                 const submitBtn = form.querySelector('.submit-btn');
                 const original = submitBtn.textContent;
-                submitBtn.textContent = 'Sending...';
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> &nbsp;Sending...';
                 submitBtn.disabled = true;
 
                 try {
@@ -640,11 +671,11 @@
                         timestamp: serverTimestamp(),
                         read: false
                     });
-                    alert("Message sent successfully! I'll get back to you soon. 😊");
+                    showToast("Message sent! I'll get back to you soon 😊", 'success');
                     form.reset();
                 } catch (err) {
                     console.error('Firestore save failed:', err);
-                    alert('Failed to send. Please try again later.');
+                    showToast('Failed to send. Please try again.', 'error');
                 } finally {
                     submitBtn.textContent = original;
                     submitBtn.disabled = false;
@@ -657,6 +688,7 @@
         loadProfile();
         setupContactForm();
     </script>
+
 
 
 
