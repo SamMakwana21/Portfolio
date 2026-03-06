@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel — Sam Makwana Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0f0f1a;
+            --card: #1a1a2e;
+            --card2: #16213e;
+            --border: #2a2a4a;
+            --accent: #a78bfa;
+            --accent2: #7c3aed;
+            --accent-glow: rgba(167, 139, 250, 0.15);
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --input-bg: #0d0d1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ─── LOGIN SCREEN ─── */
+        #login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 50% 50%, #1a0a3e 0%, #0f0f1a 70%);
+        }
+
+        .login-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-logo .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 24px rgba(167, 139, 250, 0.35);
+        }
+
+        .login-logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .login-logo p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .form-field {
+            margin-bottom: 18px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .form-field input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(167, 139, 250, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #login-error {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #fca5a5;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        /* ─── DASHBOARD ─── */
+        #dashboard {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 240px;
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-header h2 {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .sidebar-header p {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            margin-bottom: 4px;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-item:hover {
+            background: var(--accent-glow);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--accent2)22, var(--accent)22);
+            color: var(--accent);
+        }
+
+        .nav-item i {
+            width: 18px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .badge {
+            margin-left: auto;
+            background: var(--accent2);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 999px;
+        }
+
+        .sidebar-footer {
+            padding: 16px 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 11px 14px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 10px;
+            color: #fca5a5;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 240px;
+            padding: 32px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            margin-bottom: 28px;
+        }
+
+        .page-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Tab panels */
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stat-icon.purple {
+            background: rgba(167, 139, 250, 0.15);
+            color: var(--accent);
+        }
+
+        .stat-icon.green {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .stat-icon.orange {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .stat-info h3 {
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .stat-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Section card */
+        .section-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .section-card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-card-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .btn-add {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px;
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-add:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Projects list */
+        .projects-list {
+            padding: 8px;
+        }
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            transition: background 0.2s;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+
+        .project-item:hover {
+            background: var(--accent-glow);
+        }
+
+        .project-thumb {
+            width: 52px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: var(--card2);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .project-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .project-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .project-details h3 {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .project-details p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .project-tags-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(167, 139, 250, 0.12);
+            color: var(--accent);
+            border-radius: 999px;
+            padding: 2px 9px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.2s;
+            color: var(--text-muted);
+        }
+
+        .btn-icon:hover.edit {
+            background: rgba(167, 139, 250, 0.15);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .btn-icon:hover.delete {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        /* Contacts list */
+        .contacts-list {
+            padding: 8px;
+        }
+
+        .contact-item {
+            padding: 16px;
+            border-radius: 12px;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-item:hover {
+            background: var(--accent-glow);
+        }
+
+        .contact-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .contact-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .contact-meta h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .contact-meta p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .contact-time {
+            margin-left: auto;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .contact-subject {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .contact-message {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .contact-delete {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .btn-sm-danger {
+            padding: 5px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-sm-danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Profile form */
+        .profile-form {
+            padding: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            padding: 11px 14px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+            resize: vertical;
+        }
+
+        .field textarea {
+            min-height: 90px;
+        }
+
+        .field input:focus,
+        .field textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .btn-save {
+            padding: 11px 28px;
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-save:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.2s;
+        }
+
+        .modal-overlay.open .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .btn-close {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .btn-close:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .modal .field {
+            margin-bottom: 16px;
+        }
+
+        .tags-input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tags-input-row input {
+            flex: 1;
+        }
+
+        .btn-tag-add {
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--card2);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-tag-add:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .tags-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .tag-chip {
+            background: rgba(167, 139, 250, 0.12);
+            color: var(--accent);
+            border-radius: 999px;
+            padding: 3px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tag-chip span {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .tag-chip span:hover {
+            opacity: 1;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 9999;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+        }
+
+        .toast.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
+            opacity: 0.4;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 32px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ─── LOGIN SCREEN ─── -->
+    <div id="login-screen">
+        <div class="login-card">
+            <div class="login-logo">
+                <div class="icon">🔐</div>
+                <h1>Admin Panel</h1>
+                <p>Sam Makwana Portfolio</p>
+            </div>
+            <div id="login-error"></div>
+            <div class="form-field">
+                <label>Email Address</label>
+                <input type="email" id="admin-email" placeholder="admin@example.com" autocomplete="email">
+            </div>
+            <div class="form-field">
+                <label>Password</label>
+                <input type="password" id="admin-password" placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <button class="btn-primary" id="login-btn" onclick="adminLogin()">
+                <span id="login-btn-text">Login to Dashboard</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ─── DASHBOARD ─── -->
+    <div id="dashboard">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>⚡ Admin Panel</h2>
+                <p id="admin-email-display">Loading...</p>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" onclick="switchTab('projects')" id="tab-btn-projects">
+                    <i class="fas fa-gamepad"></i> Projects
+                    <span class="badge" id="badge-projects">0</span>
+                </button>
+                <button class="nav-item" onclick="switchTab('profile')" id="tab-btn-profile">
+                    <i class="fas fa-user"></i> Profile
+                </button>
+                <button class="nav-item" onclick="switchTab('contacts')" id="tab-btn-contacts">
+                    <i class="fas fa-envelope"></i> Contacts
+                    <span class="badge" id="badge-contacts">0</span>
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="adminLogout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- Projects Tab -->
+            <div class="tab-panel active" id="tab-projects">
+                <div class="page-header">
+                    <h1>Projects</h1>
+                    <p>Manage your portfolio projects</p>
+                </div>
+                <div class="stats-row" id="stats-row" style="display:none">
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i class="fas fa-gamepad"></i></div>
+                        <div class="stat-info">
+                            <h3 id="stat-projects">0</h3>
+                            <p>Total Projects</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-envelope"></i></div>
+                        <div class="stat-info">
+                            <h3 id="stat-contacts">0</h3>
+                            <p>Messages</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i class="fas fa-star"></i></div>
+                        <div class="stat-info">
+                            <h3 id="stat-new">0</h3>
+                            <p>New Messages</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <h2>All Projects</h2>
+                        <button class="btn-add" onclick="openProjectModal()">
+                            <i class="fas fa-plus"></i> Add Project
+                        </button>
+                    </div>
+                    <div class="projects-list" id="projects-list">
+                        <div class="loading"><span class="spinner"></span> Loading projects...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div class="tab-panel" id="tab-profile">
+                <div class="page-header">
+                    <h1>Profile</h1>
+                    <p>Update your portfolio information</p>
+                </div>
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <h2>Personal Information</h2>
+                    </div>
+                    <div class="profile-form">
+                        <div class="form-row">
+                            <div class="field">
+                                <label>Full Name</label>
+                                <input type="text" id="prof-name" placeholder="Sahil Makwana">
+                            </div>
+                            <div class="field">
+                                <label>Job Title</label>
+                                <input type="text" id="prof-title" placeholder="Unity Game Developer">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="field">
+                                <label>Subtitle / Role</label>
+                                <input type="text" id="prof-subtitle" placeholder="Game Developer & Game Designer">
+                            </div>
+                            <div class="field">
+                                <label>Location</label>
+                                <input type="text" id="prof-location" placeholder="Surat, Gujarat, India">
+                            </div>
+                        </div>
+                        <div class="form-row full">
+                            <div class="field">
+                                <label>Hero Description</label>
+                                <textarea id="prof-hero-desc"
+                                    placeholder="Short bio shown in hero section..."></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="field">
+                                <label>Email</label>
+                                <input type="email" id="prof-email" placeholder="sammakwana212@gmail.com">
+                            </div>
+                            <div class="field">
+                                <label>Phone</label>
+                                <input type="text" id="prof-phone" placeholder="+91 91069 11788">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="field">
+                                <label>GitHub URL</label>
+                                <input type="url" id="prof-github" placeholder="https://github.com/...">
+                            </div>
+                            <div class="field">
+                                <label>LinkedIn URL</label>
+                                <input type="url" id="prof-linkedin" placeholder="https://linkedin.com/in/...">
+                            </div>
+                        </div>
+                        <button class="btn-save" onclick="saveProfile()">
+                            <i class="fas fa-save"></i> &nbsp;Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacts Tab -->
+            <div class="tab-panel" id="tab-contacts">
+                <div class="page-header">
+                    <h1>Contact Messages</h1>
+                    <p>Messages received from your portfolio</p>
+                </div>
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <h2>All Messages</h2>
+                    </div>
+                    <div class="contacts-list" id="contacts-list">
+                        <div class="loading"><span class="spinner"></span> Loading messages...</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ─── ADD / EDIT PROJECT MODAL ─── -->
+    <div class="modal-overlay" id="project-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-title">Add New Project</h2>
+                <button class="btn-close" onclick="closeProjectModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="field">
+                <label>Project Title *</label>
+                <input type="text" id="proj-title-input" placeholder="My Awesome Game">
+            </div>
+            <div class="field">
+                <label>Description *</label>
+                <textarea id="proj-desc-input" placeholder="Short description of the project..."
+                    style="min-height:80px"></textarea>
+            </div>
+            <div class="field">
+                <label>Image URL</label>
+                <input type="url" id="proj-img-input" placeholder="https://... (or leave blank for icon)">
+            </div>
+            <div class="field">
+                <label>Project Link (Google Drive / Play Store / etc.)</label>
+                <input type="url" id="proj-link-input" placeholder="https://...">
+            </div>
+            <div class="field">
+                <label>Tags (e.g. Unity, C#, 2D)</label>
+                <div class="tags-input-row">
+                    <input type="text" id="proj-tag-input" placeholder="Add a tag"
+                        onkeydown="if(event.key==='Enter'){event.preventDefault();addTag()}">
+                    <button class="btn-tag-add" onclick="addTag()"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="tags-preview" id="tags-preview"></div>
+            </div>
+            <div class="field">
+                <label>Display Order (lower = first)</label>
+                <input type="number" id="proj-order-input" placeholder="1" value="1">
+            </div>
+            <div style="display:flex; gap:12px; margin-top:24px;">
+                <button class="btn-save" style="flex:1" onclick="saveProject()">
+                    <i class="fas fa-save"></i> &nbsp;<span id="modal-save-text">Add Project</span>
+                </button>
+                <button class="btn-close" style="width:auto;padding:0 20px"
+                    onclick="closeProjectModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ─── SCRIPTS ─── -->
+    <script type="module">
+        import { db, auth } from './firebase-config.js';
+        import {
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import {
+            collection, getDocs, addDoc, updateDoc, deleteDoc,
+            doc, setDoc, getDoc, query, orderBy, serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // ─── State ───
+        let currentProjects = [];
+        let editingProjectId = null;
+        let currentTags = [];
+
+        // ─── Auth State ───
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'flex';
+                document.getElementById('admin-email-display').textContent = user.email;
+                loadProjects();
+                loadProfile();
+                loadContacts();
+                document.getElementById('stats-row').style.display = 'grid';
+            } else {
+                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('dashboard').style.display = 'none';
+            }
+        });
+
+        // ─── Login ───
+        window.adminLogin = async function () {
+            const email = document.getElementById('admin-email').value.trim();
+            const password = document.getElementById('admin-password').value;
+            const errEl = document.getElementById('login-error');
+            const btn = document.getElementById('login-btn');
+            const btnText = document.getElementById('login-btn-text');
+
+            if (!email || !password) { showLoginError('Please enter email and password.'); return; }
+
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="spinner"></span> Logging in...';
+            errEl.style.display = 'none';
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (e) {
+                showLoginError('Invalid email or password. Please try again.');
+                btn.disabled = false;
+                btnText.textContent = 'Login to Dashboard';
+            }
+        };
+
+        function showLoginError(msg) {
+            const el = document.getElementById('login-error');
+            el.textContent = msg;
+            el.style.display = 'block';
+        }
+
+        // Enter key login
+        document.getElementById('admin-password').addEventListener('keydown', e => {
+            if (e.key === 'Enter') adminLogin();
+        });
+
+        // ─── Logout ───
+        window.adminLogout = async function () {
+            await signOut(auth);
+        };
+
+        // ─── Tab Switch ───
+        window.switchTab = function (tab) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.getElementById('tab-btn-' + tab).classList.add('active');
+        };
+
+        // ─── PROJECTS ───
+        async function loadProjects() {
+            const list = document.getElementById('projects-list');
+            try {
+                const q = query(collection(db, 'projects'), orderBy('order'));
+                const snap = await getDocs(q);
+                currentProjects = [];
+                snap.forEach(d => currentProjects.push({ id: d.id, ...d.data() }));
+                renderProjects();
+                document.getElementById('badge-projects').textContent = currentProjects.length;
+                document.getElementById('stat-projects').textContent = currentProjects.length;
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load projects. Check Firestore rules.</p></div>`;
+            }
+        }
+
+        function renderProjects() {
+            const list = document.getElementById('projects-list');
+            if (currentProjects.length === 0) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-gamepad"></i><p>No projects yet. Click "Add Project" to get started.</p></div>`;
+                return;
+            }
+            list.innerHTML = currentProjects.map(p => `
+            <div class="project-item">
+                <div class="project-thumb">
+                    ${p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.title}" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-gamepad\\'></i>'">` : '<i class="fas fa-gamepad"></i>'}
+                </div>
+                <div class="project-details">
+                    <h3>${p.title}</h3>
+                    <p>${p.description}</p>
+                    <div class="project-tags-row">
+                        ${(p.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}
+                    </div>
+                </div>
+                <div class="project-actions">
+                    <button class="btn-icon edit" title="Edit" onclick="openEditProject('${p.id}')"><i class="fas fa-edit"></i></button>
+                    <button class="btn-icon delete" title="Delete" onclick="deleteProject('${p.id}', '${p.title}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `).join('');
+        }
+
+        window.openProjectModal = function () {
+            editingProjectId = null;
+            currentTags = [];
+            document.getElementById('modal-title').textContent = 'Add New Project';
+            document.getElementById('modal-save-text').textContent = 'Add Project';
+            document.getElementById('proj-title-input').value = '';
+            document.getElementById('proj-desc-input').value = '';
+            document.getElementById('proj-img-input').value = '';
+            document.getElementById('proj-link-input').value = '';
+            document.getElementById('proj-order-input').value = currentProjects.length + 1;
+            document.getElementById('proj-tag-input').value = '';
+            renderTags();
+            document.getElementById('project-modal').classList.add('open');
+        };
+
+        window.openEditProject = function (id) {
+            const p = currentProjects.find(x => x.id === id);
+            if (!p) return;
+            editingProjectId = id;
+            currentTags = [...(p.tags || [])];
+            document.getElementById('modal-title').textContent = 'Edit Project';
+            document.getElementById('modal-save-text').textContent = 'Save Changes';
+            document.getElementById('proj-title-input').value = p.title || '';
+            document.getElementById('proj-desc-input').value = p.description || '';
+            document.getElementById('proj-img-input').value = p.imageUrl || '';
+            document.getElementById('proj-link-input').value = p.link || '';
+            document.getElementById('proj-order-input').value = p.order || 1;
+            renderTags();
+            document.getElementById('project-modal').classList.add('open');
+        };
+
+        window.closeProjectModal = function () {
+            document.getElementById('project-modal').classList.remove('open');
+        };
+
+        window.addTag = function () {
+            const input = document.getElementById('proj-tag-input');
+            const val = input.value.trim();
+            if (val && !currentTags.includes(val)) {
+                currentTags.push(val);
+                renderTags();
+            }
+            input.value = '';
+            input.focus();
+        };
+
+        function renderTags() {
+            document.getElementById('tags-preview').innerHTML = currentTags.map((t, i) => `
+            <span class="tag-chip">${t} <span onclick="removeTag(${i})">✕</span></span>
+        `).join('');
+        }
+
+        window.removeTag = function (i) {
+            currentTags.splice(i, 1);
+            renderTags();
+        };
+
+        window.saveProject = async function () {
+            const title = document.getElementById('proj-title-input').value.trim();
+            const desc = document.getElementById('proj-desc-input').value.trim();
+            if (!title || !desc) { showToast('Title and description are required.', 'error'); return; }
+
+            const data = {
+                title,
+                description: desc,
+                imageUrl: document.getElementById('proj-img-input').value.trim(),
+                link: document.getElementById('proj-link-input').value.trim(),
+                tags: currentTags,
+                order: parseInt(document.getElementById('proj-order-input').value) || 1,
+            };
+
+            try {
+                if (editingProjectId) {
+                    await updateDoc(doc(db, 'projects', editingProjectId), data);
+                    showToast('Project updated!', 'success');
+                } else {
+                    await addDoc(collection(db, 'projects'), data);
+                    showToast('Project added!', 'success');
+                }
+                closeProjectModal();
+                loadProjects();
+            } catch (e) {
+                showToast('Error saving project.', 'error');
+            }
+        };
+
+        window.deleteProject = async function (id, title) {
+            if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
+            try {
+                await deleteDoc(doc(db, 'projects', id));
+                showToast('Project deleted.', 'success');
+                loadProjects();
+            } catch (e) {
+                showToast('Error deleting project.', 'error');
+            }
+        };
+
+        // ─── PROFILE ───
+        async function loadProfile() {
+            try {
+                const snap = await getDoc(doc(db, 'profile', 'main'));
+                if (snap.exists()) {
+                    const d = snap.data();
+                    document.getElementById('prof-name').value = d.name || '';
+                    document.getElementById('prof-title').value = d.title || '';
+                    document.getElementById('prof-subtitle').value = d.subtitle || '';
+                    document.getElementById('prof-location').value = d.location || '';
+                    document.getElementById('prof-hero-desc').value = d.heroDescription || '';
+                    document.getElementById('prof-email').value = d.email || '';
+                    document.getElementById('prof-phone').value = d.phone || '';
+                    document.getElementById('prof-github').value = d.github || '';
+                    document.getElementById('prof-linkedin').value = d.linkedin || '';
+                }
+            } catch (e) { console.log('Profile load error:', e); }
+        }
+
+        window.saveProfile = async function () {
+            const data = {
+                name: document.getElementById('prof-name').value.trim(),
+                title: document.getElementById('prof-title').value.trim(),
+                subtitle: document.getElementById('prof-subtitle').value.trim(),
+                location: document.getElementById('prof-location').value.trim(),
+                heroDescription: document.getElementById('prof-hero-desc').value.trim(),
+                email: document.getElementById('prof-email').value.trim(),
+                phone: document.getElementById('prof-phone').value.trim(),
+                github: document.getElementById('prof-github').value.trim(),
+                linkedin: document.getElementById('prof-linkedin').value.trim(),
+            };
+            try {
+                await setDoc(doc(db, 'profile', 'main'), data);
+                showToast('Profile saved successfully!', 'success');
+            } catch (e) {
+                showToast('Error saving profile.', 'error');
+            }
+        };
+
+        // ─── CONTACTS ───
+        async function loadContacts() {
+            const list = document.getElementById('contacts-list');
+            try {
+                const q = query(collection(db, 'contacts'), orderBy('timestamp', 'desc'));
+                const snap = await getDocs(q);
+                const contacts = [];
+                snap.forEach(d => contacts.push({ id: d.id, ...d.data() }));
+
+                document.getElementById('badge-contacts').textContent = contacts.length;
+                document.getElementById('stat-contacts').textContent = contacts.length;
+                document.getElementById('stat-new').textContent = contacts.filter(c => !c.read).length;
+
+                if (contacts.length === 0) {
+                    list.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><p>No messages yet.</p></div>`;
+                    return;
+                }
+
+                list.innerHTML = contacts.map(c => {
+                    const date = c.timestamp?.toDate
+                        ? c.timestamp.toDate().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+                        : 'Just now';
+                    const initials = (c.name || '?').charAt(0).toUpperCase();
+                    return `
+                <div class="contact-item" id="contact-${c.id}">
+                    <div class="contact-header">
+                        <div class="contact-avatar">${initials}</div>
+                        <div class="contact-meta">
+                            <h4>${c.name || 'Unknown'}</h4>
+                            <p>${c.email || ''}</p>
+                        </div>
+                        <span class="contact-time">${date}</span>
+                    </div>
+                    <div class="contact-subject">${c.subject || '(No subject)'}</div>
+                    <div class="contact-message">${c.message || ''}</div>
+                    <div class="contact-delete">
+                        <button class="btn-sm-danger" onclick="deleteContact('${c.id}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>`;
+                }).join('');
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load messages.</p></div>`;
+            }
+        }
+
+        window.deleteContact = async function (id) {
+            if (!confirm('Delete this message?')) return;
+            try {
+                await deleteDoc(doc(db, 'contacts', id));
+                document.getElementById('contact-' + id)?.remove();
+                showToast('Message deleted.', 'success');
+            } catch (e) {
+                showToast('Error deleting message.', 'error');
+            }
+        };
+
+        // ─── Toast ───
+        function showToast(msg, type = 'success') {
+            const t = document.getElementById('toast');
+            t.textContent = (type === 'success' ? '✅  ' : '❌  ') + msg;
+            t.className = `toast ${type} show`;
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        window.showToast = showToast;
+
+        // Close modal on overlay click
+        document.getElementById('project-modal').addEventListener('click', function (e) {
+            if (e.target === this) closeProjectModal();
+        });
+    </script>
+
+</body>
+
+</html>

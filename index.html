@@ -105,6 +105,16 @@
             opacity: 0;
         }
     </style>
+    <!-- Firebase ESM import map -->
+    <script type="importmap">
+    {
+        "imports": {
+            "firebase/app":       "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+            "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js",
+            "firebase/auth":      "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"
+        }
+    }
+    </script>
 </head>
 
 <body>
@@ -301,180 +311,16 @@
                 skills and creative solutions.</p>
         </div>
 
-        <div class="project-grid">
-            <a href="YOUR_SAVE_THE_DOG_VIDEO_URL" target="_blank" class="project-link">
-                <div class="project-card fade-in" style="opacity: 0;">
-                    <div class="project-image">
-                        <img src="assets/SaveTheDog.jpg" alt="Save The Dog">
-                        <!-- <div class="project-overlay">
-                            <a href="#" class="view-project">View Details</a>
-                        </div> -->
-                    </div>
-                    <div class="project-info">
-                        <h3>Save The Dog</h3>
-                        <p>A fun physics-based puzzle where you draw a shield to protect the dog from a swarm of angry
-                            bees!Test your timing, logic, and quick thinking as each level introduces new challenges and
-                            traps.Perfect for hyper-casual players who love clever mechanics with a simple twist.</p>
-                        <div class="project-tags">
-                            <span>Unity</span>
-                            <span>C#</span>
-                            <span>2D</span>
-                            <span>Puzzle</span>
-                            <span>Logic Game</span>
-                            <span>SaveTheDog</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="https://drive.google.com/file/d/1togNlk8qDZTKhkn0SsS3zfJ4_PZfRd9F/view?usp=sharing" target="_blank"
-                class="project-link">
-                <div class="project-card fade-in" style="opacity: 0; transform: translateY(0px);">
-                    <div class="project-image">
-                        <img src="assets/SolitaireOffline.jpg" alt="Solitaire Offline">
-                        <!-- <div class="project-overlay">
-                            <a href="#" class="view-project">View Details</a>
-                        </div> -->
-                    </div>
-                    <div class="project-info">
-                        <h3>Solitaire Offline Card Game</h3>
-                        <p>Players begin with a shuffled deck and aim to stack cards in ascending order by suit — just
-                            like
-                            classic solitaire. Featuring intuitive drag-and-drop controls, undo options, and unlimited
-                            reshuffling, the game
-                            delivers a smooth, relaxing experience for both casual players and card game lovers. Built
-                            for
-                            offline play, it's the perfect blend of simplicity and strategy.</p>
-                        <div class="project-tags">
-                            <span>Unity</span>
-                            <span>C#</span>
-                            <span>2D</span>
-                            <span>Card Game</span>
-                            <span>Classic</span>
-                            <span>Solitaire</span>
-                            <span>Offline Game</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="https://drive.google.com/file/d/1jybXEoeW1dRu5K7HR0NQAyaVauwosCUW/view?usp=sharing" target="_blank"
-                class="project-link">
-                <div class="project-card fade-in" style="opacity: 0;">
-                    <div class="project-image">
-                        <img src="assets/FindDifferences.png" alt="Find Difference & Solve The Puzzle">
-                        <!-- <div class="project-overlay">
-                            <a href="#" class="view-project">View Details</a>
-                        </div> -->
-                    </div>
-                    <div class="project-info">
-                        <h3>Find Difference & Solve The Puzzle</h3>
-                        <p>Sharpen your eyes and spot the smallest visual changes across 300+ unique levels!
-                            Find hidden differences, solve visual brain teasers, and beat the clock. Integrated with
-                            hints,
-                            zoom, and leaderboards for a complete puzzle-solving experience.
-                        </p>
-                        <div class="project-tags">
-                            <span>Unity</span>
-                            <span>C#</span>
-                            <span>2D</span>
-                            <span>Puzzle</span>
-                            <span>Find The Differences</span>
-                            <span>Brain Teaser</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="YOUR_SHORT_THE_BALL_VIDEO_URL" target="_blank" class="project-link">
-                <div class="project-card fade-in" style="opacity: 0; transform: translateY(0px);">
-                    <div class="project-image">
-                        <img src="assets/ShortTheBall.jpg" alt="Short The Ball Puzzle Game">
-                        <!-- <div class="project-overlay">
-                            <a href="#" class="view-project">View Details</a>
-                        </div> -->
-                    </div>
-                    <div class="project-info">
-                        <h3>Short The Ball - Puzzle Game </h3>
-                        <p>A fun and addictive color-sorting puzzle game where you organize balls into tubes based on
-                            color.
-                            Test your logic and strategy skills with hundreds of levels that increase in difficulty.
-                            Easy to
-                            play, challenging to master!</p>
-                        <div class="project-tags">
-                            <span>Unity</span>
-                            <span>C#</span>
-                            <span>3D</span>
-                            <span>Puzzle</span>
-                            <span>Logic</span>
-                            <span>Shorting Game</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="https://drive.google.com/file/d/1ldkRodQzmNptY88l3iSKajYypS_xcbZ9/view?usp=sharing" target="_blank"
-                class="project-link">
-                <div class="project-card fade-in" style="opacity: 0; transform: translateY(0px);">
-                    <div class="project-image">
-                        <img src="assets/CastleDodgeSurvivalRun.jpg" alt="Castle Dodge - Survival Run Game ">
-                        <!-- <div class="project-overlay">
-                            <a href="#" class="view-project">View Details</a>
-                        </div> -->
-                    </div>
-                    <div class="project-info">
-                        <h3>Castle Dodge: Survival Run</h3>
-                        <p>A fast-paced 2D mobile survival arcade game where players dodge falling rocks and missiles
-                            while collecting coins to survive as long as possible. Featuring a heart-based health
-                            system,
-                            score tracking, particle effects, and ad-integrated gameplay, set in a vibrant fantasy
-                            castle
-                            environment.</p>
-                        <div class="project-tags">
-                            <span>Unity</span>
-                            <span>C#</span>
-                            <span>2D</span>
-                            <span>Survival</span>
-                            <span>Castle Dodge</span>
-                            <span>Run Game</span>
-                            <span>Ad Integrated</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="https://drive.google.com/file/d/1QGJEkgJVDPUPQEzR0yyPT3J44hD264BV/view?usp=sharing" target="_blank"
-                class="project-link">
-                <div class="project-card fade-in" style="opacity: 0; transform: translateY(0px);">
-                    <div class="project-image">
-                        <img src="assets/CombatGame.jpg" alt="Combat Game">
-                        <!-- <div class="project-overlay">
-                            <a href="#" class="view-project">View Details</a>
-                        </div> -->
-                    </div>
-                    <div class="project-info">
-                        <h3>Yasuke vs Oda – Samurai Combat Arena</h3>
-                        <p>A 3D mobile combat fighting game inspired by Feudal Japan, featuring an intense
-                            one-on-one battle between Yasuke (Player) and Oda (AI Enemy). The game focuses
-                            on fast-paced close combat, fluid movement, and responsive controls.
-                            Players use a variety of moves including Punch, Kick, Heavy Attack, Pushback,
-                            Block, Roll, Jump, Run, and combo attacks, enhanced with particle effects,
-                            hit flashes, and damage feedback. A complete round-based system with health and
-                            stamina bars delivers a polished and immersive samurai duel experience..</p>
-                        <div class="project-tags">
-                            <span>Unity</span>
-                            <span>C#</span>
-                            <span>Unity 3D</span>
-                            <span>Combat</span>
-                            <span>Samurai Game</span>
-                            <span>Action RPG</span>
-                            <span>Melee Fighting</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-
+        <!-- Projects loaded dynamically from Firebase Firestore -->
+        <div class="project-grid" id="dynamic-projects-grid">
+            <div id="projects-loading"
+                style="grid-column:1/-1;text-align:center;padding:48px;color:#94a3b8;font-size:14px;">
+                Loading projects...
+            </div>
         </div>
 
         <div class="center-button">
+
             <a href="#contact" class="cta-button">Discuss Your Project <i class="fas fa-arrow-right"></i></a>
             <!-- <a href="#contact" class="cta-button">Discuss Your Project <i class="bi bootstrap-icons/fa-arrow-right"></i></a> -->
         </div>
@@ -657,6 +503,159 @@
 
     <script src="security.js"></script>
     <script src="script.js"></script>
+
+    <!-- Firebase: Dynamic data loader (type=module) -->
+    <script type="module">
+        import { db } from './firebase-config.js';
+        import {
+            collection, getDocs, doc, getDoc, addDoc,
+            query, orderBy, serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // ── Load projects from Firestore ──────────────────────────
+        async function loadProjects() {
+            const grid = document.getElementById('dynamic-projects-grid');
+            try {
+                const q = query(collection(db, 'projects'), orderBy('order'));
+                const snap = await getDocs(q);
+
+                if (snap.empty) {
+                    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px;color:#94a3b8;font-size:14px;">No projects yet. Check back soon! 🚀</div>`;
+                    return;
+                }
+
+                grid.innerHTML = '';
+                snap.forEach(d => {
+                    const p = d.data();
+                    const tags = (p.tags || []).map(t => `<span>${t}</span>`).join('');
+                    const link = p.link || '#';
+                    grid.innerHTML += `
+                        <a href="${link}" target="_blank" class="project-link">
+                            <div class="project-card fade-in" style="opacity:0;">
+                                <div class="project-image">
+                                    ${p.imageUrl
+                            ? `<img src="${p.imageUrl}" alt="${p.title}" loading="lazy">`
+                            : `<div style="display:flex;align-items:center;justify-content:center;height:200px;font-size:48px;">🎮</div>`
+                        }
+                                </div>
+                                <div class="project-info">
+                                    <h3>${p.title}</h3>
+                                    <p>${p.description}</p>
+                                    <div class="project-tags">${tags}</div>
+                                </div>
+                            </div>
+                        </a>`;
+                });
+
+                // Re-trigger fade observer on newly created cards
+                document.querySelectorAll('.project-card').forEach(el => {
+                    el.style.opacity = '0';
+                    if (window._fadeObserver) window._fadeObserver.observe(el);
+                });
+
+            } catch (e) {
+                console.warn('Firebase projects load failed:', e);
+                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px;color:#94a3b8;">Could not load projects. Please check Firebase config.</div>`;
+            }
+        }
+
+        // ── Load profile from Firestore ───────────────────────────
+        async function loadProfile() {
+            try {
+                const snap = await getDoc(doc(db, 'profile', 'main'));
+                if (!snap.exists()) return;
+                const d = snap.data();
+                if (d.name) {
+                    document.querySelectorAll('.logo, .hero h1, .animate-text, .footer-info h3').forEach(el => {
+                        if (el.textContent.toLowerCase().includes('sahil') ||
+                            el.textContent.toLowerCase().includes('sam')) {
+                            el.textContent = d.name;
+                        }
+                    });
+                }
+                if (d.subtitle) {
+                    const h2 = document.querySelector('.animate-text-delay');
+                    if (h2) h2.textContent = d.subtitle;
+                }
+                if (d.heroDescription) {
+                    const desc = document.querySelector('.hero-description');
+                    if (desc) desc.textContent = d.heroDescription;
+                }
+                if (d.email) {
+                    document.querySelectorAll('.contact-item p, .footer-contact-info p').forEach(el => {
+                        if (el.textContent.includes('@')) el.textContent = d.email;
+                    });
+                }
+                if (d.phone) {
+                    document.querySelectorAll('.contact-item p, .footer-contact-info p').forEach(el => {
+                        if (el.textContent.includes('+91') || el.textContent.includes('91069')) el.textContent = d.phone;
+                    });
+                }
+                if (d.location) {
+                    document.querySelectorAll('.contact-item p, .footer-contact-info p').forEach(el => {
+                        if (el.textContent.includes('Surat') || el.textContent.includes('Gujarat')) el.textContent = d.location;
+                    });
+                }
+            } catch (e) {
+                console.warn('Firebase profile load failed:', e);
+            }
+        }
+
+        // ── Save contact form to Firestore ────────────────────────
+        function setupContactForm() {
+            const form = document.querySelector('.contact-form');
+            if (!form) return;
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = form.querySelector('#name')?.value.trim();
+                const email = form.querySelector('#email')?.value.trim();
+                const subject = form.querySelector('#subject')?.value.trim();
+                const message = form.querySelector('#message')?.value.trim();
+
+                if (!name || !email || !message) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+
+                const submitBtn = form.querySelector('.submit-btn');
+                const original = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+
+                try {
+                    await addDoc(collection(db, 'contacts'), {
+                        name, email, subject: subject || '', message,
+                        timestamp: serverTimestamp(),
+                        read: false
+                    });
+                    alert('Message sent successfully! I\'ll get back to you soon. 😊');
+                    form.reset();
+                } catch (err) {
+                    console.error('Firestore save failed:', err);
+                    alert('Message sent! (Note: Could not save to database — check Firebase config)');
+                } finally {
+                    submitBtn.textContent = original;
+                    submitBtn.disabled = false;
+                }
+            }, { once: false });
+        }
+
+        // ── Initialize ────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProjects();
+            loadProfile();
+            setupContactForm();
+        });
+
+        // If DOMContentLoaded already fired
+        if (document.readyState !== 'loading') {
+            loadProjects();
+            loadProfile();
+            setupContactForm();
+        }
+    </script>
+
 
 </body>
 

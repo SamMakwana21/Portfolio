@@ -65,6 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
+    // Expose globally so Firebase module can observe dynamically loaded cards
+    window._fadeObserver = fadeObserver;
+
     // Observe elements for fade-in
     document.querySelectorAll('.service-card, .timeline-item, .about-details, .project-card').forEach(el => {
         el.style.opacity = '0';
