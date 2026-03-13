@@ -1395,12 +1395,17 @@
         import {
             signInWithEmailAndPassword,
             signOut,
-            onAuthStateChanged
+            onAuthStateChanged,
+            setPersistence,
+            inMemoryPersistence
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import {
             collection, getDocs, addDoc, updateDoc, deleteDoc,
             doc, setDoc, getDoc, query, orderBy, serverTimestamp, writeBatch
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Set persistence to MEMORY so it NEVER Remembers login state across refreshes or tab closures
+        setPersistence(auth, inMemoryPersistence).catch(console.error);
 
         // ─── State ───
         let currentProjects = [];
