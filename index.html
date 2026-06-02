@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="fontstyle" rel="stylesheet">
 
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        (function () { emailjs.init({ publicKey: 'OgncOBEZr4oV01D17' }); })();
+    </script>
+
     <style>
         .fade-in {
             animation: fadeIn 0.8s ease forwards;
@@ -964,6 +970,7 @@
                 submitBtn.disabled = true;
 
                 try {
+                    // Save to Firestore
                     await addDoc(collection(db, 'contacts'), {
                         name, email,
                         subject: subject || '',
@@ -971,10 +978,19 @@
                         timestamp: serverTimestamp(),
                         read: false
                     });
+
+                    // Send email notification via EmailJS
+                    await emailjs.send('service_n2ru1a6', 'template_f5k8el4', {
+                        name: name,
+                        email: email,
+                        subject: subject || 'Not specified',
+                        message: message
+                    });
+
                     showToast("Message sent! I'll get back to you soon 😊", 'success');
                     form.reset();
                 } catch (err) {
-                    console.error('Firestore save failed:', err);
+                    console.error('Send failed:', err);
                     showToast('Failed to send. Please try again.', 'error');
                 } finally {
                     submitBtn.textContent = original;
