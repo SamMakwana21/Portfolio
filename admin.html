@@ -816,6 +816,42 @@
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
         }
 
+        .btn-icon.hide:hover {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fcd34d;
+            border-color: rgba(245, 158, 11, 0.3);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+        }
+
+        .btn-icon.show:hover {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Hidden project — dimmed look in admin list */
+        .project-item.is-hidden {
+            opacity: 0.45;
+            border-color: rgba(245, 158, 11, 0.2) !important;
+            background: rgba(245, 158, 11, 0.03);
+        }
+
+        .hidden-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fcd34d;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
         /* Contacts list */
         .contacts-list {
             padding: 12px;
@@ -1918,8 +1954,11 @@
                 currentProjects = [];
                 snap.forEach(d => currentProjects.push({ id: d.id, ...d.data() }));
                 renderProjects();
-                document.getElementById('badge-projects').textContent = currentProjects.length;
-                document.getElementById('stat-projects').textContent = currentProjects.length;
+                const visibleCount = currentProjects.filter(p => !p.hidden).length;
+                const hiddenCount  = currentProjects.filter(p =>  p.hidden).length;
+                document.getElementById('badge-projects').textContent = visibleCount;
+                document.getElementById('stat-projects').textContent = currentProjects.length
+                    + (hiddenCount > 0 ? ` (${hiddenCount} hidden)` : '');
             } catch (e) {
                 list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load projects. Check Firestore rules.</p></div>`;
             }
@@ -1932,7 +1971,7 @@
                 return;
             }
             list.innerHTML = currentProjects.map(p => `
-            <div class="project-item">
+            <div class="project-item${p.hidden ? ' is-hidden' : ''}">
                 <div class="project-thumb">
                     ${p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.title}" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-gamepad\\'></i>'">` : '<i class="fas fa-gamepad"></i>'}
                 </div>
@@ -1941,9 +1980,13 @@
                     <p>${p.description}</p>
                     <div class="project-tags-row">
                         ${(p.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}
+                        ${p.hidden ? `<span class="hidden-badge"><i class="fas fa-eye-slash"></i> Hidden from Portfolio</span>` : ''}
                     </div>
                 </div>
                 <div class="project-actions">
+                    <button class="btn-icon ${p.hidden ? 'show' : 'hide'}" title="${p.hidden ? 'Show in Portfolio' : 'Hide from Portfolio'}" onclick="toggleProjectVisibility('${p.id}', ${p.hidden ? 'true' : 'false'})">
+                        <i class="fas fa-eye${p.hidden ? '' : '-slash'}"></i>
+                    </button>
                     <button class="btn-icon edit" title="Edit" onclick="openEditProject('${p.id}')"><i class="fas fa-edit"></i></button>
                     <button class="btn-icon delete" title="Delete" onclick="deleteProject('${p.id}', '${p.title}')"><i class="fas fa-trash"></i></button>
                 </div>
@@ -2065,6 +2108,22 @@
                 loadProjects();
             } catch (e) {
                 showToast('Error deleting project.', 'error');
+            }
+        };
+
+        // ─── HIDE / SHOW PROJECT ───
+        window.toggleProjectVisibility = async function (id, isCurrentlyHidden) {
+            const newHidden = !isCurrentlyHidden;
+            try {
+                await updateDoc(doc(db, 'projects', id), { hidden: newHidden });
+                showToast(
+                    newHidden ? '👁️ Project hidden from portfolio.' : '✅ Project is now visible in portfolio.',
+                    newHidden ? 'error' : 'success'
+                );
+                loadProjects();
+            } catch (e) {
+                console.error(e);
+                showToast('Error updating project visibility.', 'error');
             }
         };
 

@@ -540,9 +540,12 @@
                 }
 
                 const projects = [];
-                snap.forEach(d => projects.push(d.data()));
+                snap.forEach(d => {
+                    const data = d.data();
+                    if (!data.hidden) projects.push(data); // ← Skip hidden projects
+                });
 
-                // Cache the fetched projects
+                // Cache the fetched projects (only visible ones)
                 localStorage.setItem('portfolio_projects', JSON.stringify(projects));
 
                 // Render fresh data
