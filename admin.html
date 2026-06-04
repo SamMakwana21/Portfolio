@@ -877,6 +877,27 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
+        .contact-item.unread {
+            border-color: rgba(167, 139, 250, 0.3) !important;
+            background: rgba(139, 92, 246, 0.04) !important;
+        }
+
+        .unread-indicator {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--accent2), var(--accent3));
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-left: 10px;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+            text-transform: uppercase;
+            box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);
+        }
+
         .contact-header {
             display: flex;
             align-items: center;
@@ -1336,26 +1357,22 @@
             <nav class="sidebar-nav">
                 <button class="nav-item active" onclick="switchTab('projects')" id="tab-btn-projects">
                     <i class="fas fa-gamepad"></i> Projects
-                    <span class="badge" id="badge-projects">0</span>
                 </button>
                 <button class="nav-item" onclick="switchTab('education')" id="tab-btn-education">
                     <i class="fas fa-graduation-cap"></i> Education
-                    <span class="badge" id="badge-education">0</span>
                 </button>
                 <button class="nav-item" onclick="switchTab('skills')" id="tab-btn-skills">
                     <i class="fas fa-tools"></i> Skills
-                    <span class="badge" id="badge-skills">0</span>
                 </button>
                 <button class="nav-item" onclick="switchTab('services')" id="tab-btn-services">
                     <i class="fas fa-briefcase"></i> Services
-                    <span class="badge" id="badge-services">0</span>
                 </button>
                 <button class="nav-item" onclick="switchTab('profile')" id="tab-btn-profile">
                     <i class="fas fa-user"></i> Profile
                 </button>
                 <button class="nav-item" onclick="switchTab('contacts')" id="tab-btn-contacts">
                     <i class="fas fa-envelope"></i> Contacts
-                    <span class="badge" id="badge-contacts">0</span>
+                    <span class="badge" id="badge-contacts" style="display:none">0</span>
                 </button>
             </nav>
             <div class="sidebar-footer">
@@ -1936,6 +1953,10 @@
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             document.getElementById('tab-' + tab).classList.add('active');
             document.getElementById('tab-btn-' + tab).classList.add('active');
+
+            if (tab === 'contacts') {
+                loadContacts(true);
+            }
         };
 
         // ─── PROJECTS ───
@@ -1955,8 +1976,7 @@
                 snap.forEach(d => currentProjects.push({ id: d.id, ...d.data() }));
                 renderProjects();
                 const visibleCount = currentProjects.filter(p => !p.hidden).length;
-                const hiddenCount  = currentProjects.filter(p =>  p.hidden).length;
-                document.getElementById('badge-projects').textContent = visibleCount;
+                const hiddenCount = currentProjects.filter(p => p.hidden).length;
                 document.getElementById('stat-projects').textContent = currentProjects.length
                     + (hiddenCount > 0 ? ` (${hiddenCount} hidden)` : '');
             } catch (e) {
@@ -2171,7 +2191,6 @@
                 const snap = await getDocs(q);
                 currentEducation = [];
                 snap.forEach(d => currentEducation.push({ id: d.id, ...d.data() }));
-                document.getElementById('badge-education').textContent = currentEducation.length;
                 renderEducation();
                 if (seeded) showToast('Education data seeded to Firebase! 🎉', 'success');
             } catch (e) {
@@ -2291,7 +2310,6 @@
                 const snap = await getDocs(q);
                 currentSkills = [];
                 snap.forEach(d => currentSkills.push({ id: d.id, ...d.data() }));
-                document.getElementById('badge-skills').textContent = currentSkills.length;
                 renderSkills();
                 if (seeded) showToast('Skills data seeded to Firebase! 🎉', 'success');
             } catch (e) {
@@ -2401,7 +2419,6 @@
                 const snap = await getDocs(q);
                 currentServices = [];
                 snap.forEach(d => currentServices.push({ id: d.id, ...d.data() }));
-                document.getElementById('badge-services').textContent = currentServices.length;
                 renderServices();
                 if (seeded) showToast('Services data seeded to Firebase! 🎉', 'success');
             } catch (e) {
@@ -2595,7 +2612,7 @@
         };
 
         // ─── CONTACTS ───
-        async function loadContacts() {
+        async function loadContacts(isViewing = false) {
             const list = document.getElementById('contacts-list');
             try {
                 const q = query(collection(db, 'contacts'), orderBy('timestamp', 'desc'));
@@ -2603,9 +2620,25 @@
                 const contacts = [];
                 snap.forEach(d => contacts.push({ id: d.id, ...d.data() }));
 
-                document.getElementById('badge-contacts').textContent = contacts.length;
+                const unreadContacts = contacts.filter(c => !c.read);
+                const unreadCount = unreadContacts.length;
+
+                const badge = document.getElementById('badge-contacts');
+                if (isViewing) {
+                    badge.textContent = '0';
+                    badge.style.display = 'none';
+                    document.getElementById('stat-new').textContent = '0';
+                } else {
+                    badge.textContent = unreadCount;
+                    if (unreadCount > 0) {
+                        badge.style.display = 'inline-block';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+                    document.getElementById('stat-new').textContent = unreadCount;
+                }
+
                 document.getElementById('stat-contacts').textContent = contacts.length;
-                document.getElementById('stat-new').textContent = contacts.filter(c => !c.read).length;
 
                 if (contacts.length === 0) {
                     list.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><p>No messages yet.</p></div>`;
@@ -2617,12 +2650,13 @@
                         ? c.timestamp.toDate().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
                         : 'Just now';
                     const initials = (c.name || '?').charAt(0).toUpperCase();
+                    const isNew = !c.read;
                     return `
-                <div class="contact-item" id="contact-${c.id}">
+                <div class="contact-item${isNew ? ' unread' : ''}" id="contact-${c.id}">
                     <div class="contact-header">
                         <div class="contact-avatar">${initials}</div>
                         <div class="contact-meta">
-                            <h4>${c.name || 'Unknown'}</h4>
+                            <h4>${c.name || 'Unknown'}${isNew ? ' <span class="unread-indicator">NEW</span>' : ''}</h4>
                             <p>${c.email || ''}</p>
                         </div>
                         <span class="contact-time">${date}</span>
@@ -2636,7 +2670,16 @@
                     </div>
                 </div>`;
                 }).join('');
+
+                if (isViewing && unreadCount > 0) {
+                    const batch = writeBatch(db);
+                    unreadContacts.forEach(c => {
+                        batch.update(doc(db, 'contacts', c.id), { read: true });
+                    });
+                    await batch.commit();
+                }
             } catch (e) {
+                console.error("Error loading contacts:", e);
                 list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load messages.</p></div>`;
             }
         }
@@ -2645,7 +2688,34 @@
             if (!confirm('Delete this message?')) return;
             try {
                 await deleteDoc(doc(db, 'contacts', id));
-                document.getElementById('contact-' + id)?.remove();
+                const contactEl = document.getElementById('contact-' + id);
+                if (contactEl) {
+                    const isUnread = contactEl.classList.contains('unread');
+                    contactEl.remove();
+
+                    // Update total contact count in stats
+                    const statTotal = document.getElementById('stat-contacts');
+                    if (statTotal) {
+                        const currentTotal = parseInt(statTotal.textContent) || 0;
+                        statTotal.textContent = Math.max(0, currentTotal - 1);
+                    }
+
+                    // If it was unread, decrement new messages count too
+                    if (isUnread) {
+                        const statNew = document.getElementById('stat-new');
+                        if (statNew) {
+                            const currentNew = parseInt(statNew.textContent) || 0;
+                            statNew.textContent = Math.max(0, currentNew - 1);
+                        }
+                        const badge = document.getElementById('badge-contacts');
+                        if (badge) {
+                            const currentBadge = parseInt(badge.textContent) || 0;
+                            const newCount = Math.max(0, currentBadge - 1);
+                            badge.textContent = newCount;
+                            if (newCount === 0) badge.style.display = 'none';
+                        }
+                    }
+                }
                 showToast('Message deleted.', 'success');
             } catch (e) {
                 showToast('Error deleting message.', 'error');
